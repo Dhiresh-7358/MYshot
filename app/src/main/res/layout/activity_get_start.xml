@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="loginProcess.GetStartActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/outfit_regular"
+        android:text="Find the best \nPhotographer \nof your \nchoice! "
+        android:textColor="@color/black"
+        android:textSize="42sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image1"
+        android:layout_width="200dp"
+        android:layout_height="280dp"
+        android:layout_marginTop="175dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ulysse_pointcheval_gasmbwvltnm_unsplash"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image2"
+        android:layout_width="220dp"
+        android:layout_height="280dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="360dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sandeep_singh_vqo4qzfyrww_unsplash"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/get_started"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/outfit_regular"
+        android:text="Get started"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image2" />
+
+
+        <ImageView
+            android:id="@+id/button"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            app:layout_constraintTop_toTopOf="@id/get_started"
+            app:layout_constraintStart_toEndOf="@id/get_started"
+            android:background="@drawable/circle"
+            android:layout_marginStart="20dp"/>
+
+<!--    <Button-->
+<!--        android:id="@+id/button"-->
+<!--        android:layout_width="48dp"-->
+<!--        android:layout_height="48dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:background="@drawable/circle"-->
+<!--        android:text="a"-->
+<!--        app:backgroundTint="@color/pink"-->
+<!--        app:layout_constraintStart_toEndOf="@id/get_started"-->
+<!--        app:layout_constraintTop_toTopOf="@id/get_started"-->
+<!--        tools:layout_editor_absoluteY="553dp" />-->
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:rotation="180"
+        android:src="@drawable/left_arrow"
+        app:layout_constraintBottom_toBottomOf="@id/button"
+        app:layout_constraintEnd_toEndOf="@id/button"
+        app:layout_constraintTop_toTopOf="@id/button"
+        app:layout_constraintStart_toStartOf="@id/button"
+        app:tint="@color/white" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
