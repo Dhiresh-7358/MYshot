@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llMain"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_marginStart="16dp"
+    android:orientation="vertical">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="102dp"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        app:cardBackgroundColor="#87CEEB"
+        app:cardCornerRadius="20dp">
+
+        <ImageView
+            android:id="@+id/categoryImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:foregroundGravity="center"
+            app:srcCompat="@drawable/wedding_rings" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/categoryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/outfit_regular"
+        android:padding="5dp"
+        android:text="category"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+</LinearLayout>

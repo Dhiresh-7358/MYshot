@@ -2,4 +2,12 @@
     <string name="app_name">MYshot</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="city">City</string>
+    <string name="categories">Categories</string>
+    <string name="photographers_in_your_city">Photographers in your City</string>
+    <string name="view_all_photographers">View all Photographers</string>
+    <string name="photographers_collection_in_pune">Photographers collection city</string>
+    <string name="get_inspired_by_great_ideas">Get inspired by great ideas</string>
+    <string name="view_all_photography_ideas">View all Photographers</string>
+    <string name="rating">rating</string>
 </resources>
