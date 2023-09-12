@@ -12,10 +12,13 @@
         android:theme="@style/Theme.MyShot"
         tools:targetApi="31">
         <activity
-            android:name="loginProcess.GetStartActivity"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name="loginProcess.SplashScreen"
+            android:name=".GetStartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashScreen"
             android:exported="true"
             android:theme="@style/splashTheme">
             <intent-filter>
@@ -26,7 +29,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>
