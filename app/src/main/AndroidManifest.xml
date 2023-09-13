@@ -12,13 +12,19 @@
         android:theme="@style/Theme.MyShot"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name="loginProcess.OTPActivity"
             android:exported="false" />
         <activity
-            android:name=".GetStartActivity"
+            android:name="loginProcess.UserInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashScreen"
+            android:name="loginProcess.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name="loginProcess.GetStartActivity"
+            android:exported="false" />
+        <activity
+            android:name="loginProcess.SplashScreen"
             android:exported="true"
             android:theme="@style/splashTheme">
             <intent-filter>
