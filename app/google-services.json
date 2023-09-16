@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1000807229556",
+    "project_id": "myshot-b9a39",
+    "storage_bucket": "myshot-b9a39.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000807229556:android:8dc8c33228783b13780921",
+        "android_client_info": {
+          "package_name": "com.example.myshot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkJtfWQG3hWB7Qk1fPIlPfc_qym8W2B5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
