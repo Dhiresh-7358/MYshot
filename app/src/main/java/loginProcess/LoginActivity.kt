@@ -3,11 +3,10 @@ package loginProcess
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.SpannedString
+import android.text.*
 import android.text.style.ForegroundColorSpan
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.myshot.activity.MainActivity
@@ -20,8 +19,9 @@ import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var  mAuth: FirebaseAuth
+    private lateinit var mAuth: FirebaseAuth
     private lateinit var mNumber: String
+    private lateinit var mobileNumber: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +29,19 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mAuth=FirebaseAuth.getInstance()
 
+
+        mAuth = FirebaseAuth.getInstance()
+
+        setHintColor()
+
+        mobileNumber = findViewById(R.id.mobile_number)
+
+        mobileNumber.addTextChangedListener(textWatcher)
+
+    }
+
+    private fun setHintColor() {
         val hint = "Mobile Numbers*"
         val spannable = SpannableString(hint)
         val pinkColor = ContextCompat.getColor(this, R.color.pink)
@@ -44,43 +55,62 @@ class LoginActivity : AppCompatActivity() {
 
         spannable2.setSpan(colorSpan, 30, 38, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         val colorSpan2 = ForegroundColorSpan(pinkColor)
-       spannable2.setSpan(colorSpan2, 41, 55, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-
+        spannable2.setSpan(colorSpan2, 41, 55, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         binding.termsCondition.text = SpannedString(spannable2)
+    }
 
-        binding.loginContinue.setOnClickListener {
-            mNumber=binding.mobileNumber.text.toString()
-            if(mNumber.length==10){
-                mNumber="+91$mNumber"
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            binding.loginContinue.isEnabled=false
+        }
 
-                sendOTP()
-            }
-            else{
-                Log.d("fire","invalid no. $mNumber number")
-            }
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            mNumber = mobileNumber.text.toString().trim()
+
+                binding.loginContinue.isEnabled=mNumber.length==10
+
+//                binding.loginContinue.setOnClickListener {
+//
+////                    mNumber = mobileNumber.text.toString()
+//
+//                    if (mNumber.length == 10) {
+//                        mNumber = "+91$mNumber"
+//
+//                        sendOTP()
+//                    } else {
+//                        Log.d("fire", "invalid no. $mNumber number")
+//                    }
+//
+//                }
 
         }
+
+        override fun afterTextChanged(p0: Editable?) {
+            binding.loginContinue.isEnabled=mNumber.length==10
+        }
+
     }
 
     private fun sendOTP() {
-        Log.d("fire","ON verification start")
+        Log.d("fire", "ON verification start")
 
-        val options = PhoneAuthOptions.newBuilder(mAuth)
-            .setPhoneNumber(mNumber) // Phone number to verify
-            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-            .setActivity(this) // Activity (for callback binding)
-            .setCallbacks(callbacks) // OnVerificationStateChangedCallbacks
-            .build()
+        val options =
+            PhoneAuthOptions.newBuilder(mAuth).setPhoneNumber(mNumber) // Phone number to verify
+                .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                .setActivity(this) // Activity (for callback binding)
+                .setCallbacks(callbacks) // OnVerificationStateChangedCallbacks
+                .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
 
 
     }
 
-    private val  callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+    private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
         override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-            Log.d("fire","ON verification complete")
+            Log.d("fire", "ON verification complete")
 
             signInWithPhoneAuthCredential(credential)
         }
@@ -90,13 +120,15 @@ class LoginActivity : AppCompatActivity() {
             // for instance if the the phone number format is not valid.
 
             if (e is FirebaseAuthInvalidCredentialsException) {
-                Log.d("tag","ON verification failed ${e.toString()}")
+                Log.d("tag", "ON verification failed ${e.toString()}")
 
-                Toast.makeText(this@LoginActivity, "ON verification failed $e", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "ON verification failed $e", Toast.LENGTH_SHORT)
+                    .show()
 
             } else if (e is FirebaseTooManyRequestsException) {
-                Log.d("tag","ON verification failed ${e.toString()}")
-                Toast.makeText(this@LoginActivity, "ON verification failed $e", Toast.LENGTH_SHORT).show()
+                Log.d("tag", "ON verification failed ${e.toString()}")
+                Toast.makeText(this@LoginActivity, "ON verification failed $e", Toast.LENGTH_SHORT)
+                    .show()
             }
             // Show a message and update the UI
         }
@@ -106,35 +138,30 @@ class LoginActivity : AppCompatActivity() {
             token: PhoneAuthProvider.ForceResendingToken,
         ) {
 
-                val intent=Intent(this@LoginActivity,OTPActivity::class.java)
-                intent.putExtra("OTP",verificationId)
-                intent.putExtra("resendToken",token)
-                intent.putExtra("mNumber",mNumber )
-            Log.d("fire","send to otp activity")
-                startActivity(intent)
+            val intent = Intent(this@LoginActivity, OTPActivity::class.java)
+            intent.putExtra("OTP", verificationId)
+            intent.putExtra("resendToken", token)
+            intent.putExtra("mNumber", mNumber)
+            Log.d("fire", "send to otp activity")
+            startActivity(intent)
 
 
         }
     }
 
-    private fun toMain(){
-        startActivity(Intent(this, MainActivity::class.java ))
-    }
-
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        mAuth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(this, "authSuccess", Toast.LENGTH_SHORT).show()
-                  //  toMain()
-                } else {
-                        Log.d("tag","signInWithPhoneAuthCredential ${task.exception.toString()}")
-                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                        // The verification code entered was invalid
-                    }
-                    // Update UI
+        mAuth.signInWithCredential(credential).addOnCompleteListener(this) { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(this, "authSuccess", Toast.LENGTH_SHORT).show()
+                //  toMain()
+            } else {
+                Log.d("tag", "signInWithPhoneAuthCredential ${task.exception.toString()}")
+                if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                    // The verification code entered was invalid
                 }
+                // Update UI
             }
+        }
     }
 
 }

@@ -41,6 +41,7 @@ class SelectCity : AppCompatActivity() {
         binding.button2.setOnClickListener {
             getLocation()
         }
+
         binding.button3.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
@@ -50,6 +51,8 @@ class SelectCity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission", "SetTextI18n")
     private fun getLocation() {
+        val lat = 27.615406
+        val lon = 75.125885
 
         Log.d("fire","district: 1")
         if (checkPermissions()) {
@@ -63,10 +66,11 @@ class SelectCity : AppCompatActivity() {
                         val geocoder = Geocoder(this, Locale.getDefault())
                         val list: List<Address> =
 
-                            geocoder.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
+                            geocoder.getFromLocation(lat, lon, 1) as List<Address>
+                        var ll=location.longitude
                         if (list.isNotEmpty()) {
                             val address = list[0]
-                            Log.d("fire","district: ${address.adminArea}")
+                            Log.d("fire","district: $ll")
                             val district = address.subLocality // Use subAdminArea to get the district name
                            binding.cityName.text = "District\n$district"
 
