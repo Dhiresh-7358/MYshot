@@ -20,7 +20,7 @@ class CategoryAdapter(private val listener:(CategoryData)->Unit) : RecyclerView.
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.category_rec, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.r_category_rec, parent, false)
         return MyViewHolder(itemView)
     }
     override fun getItemCount(): Int {

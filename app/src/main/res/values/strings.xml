@@ -12,4 +12,5 @@
     <string name="rating">rating</string>
     <string name="ph_price">ph_price</string>
     <string name="photographer_name">Photographer_name</string>
+    <string name="photographers">Photographers</string>
 </resources>

@@ -90,6 +90,20 @@ class HomeFragment : Fragment() {
 
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val district = data?.getStringExtra("district")
+            // Now you have the district data from SelectCity Activity
+            // You can use it as needed in your HomeFragment
+            binging.city.text=district
+        }
+
+
+    }
+
 
 
     override fun onCreateView(

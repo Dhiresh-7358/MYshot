@@ -20,7 +20,7 @@ class IdeaAdapter(private val listener:(CategoryData)->Unit) : RecyclerView.Adap
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.idea, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.r_idea, parent, false)
         return MyViewHolder(itemView)
     }
     override fun getItemCount(): Int {

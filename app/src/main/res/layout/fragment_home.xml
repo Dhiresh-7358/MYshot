@@ -41,7 +41,7 @@
                         android:gravity="center"
                         android:text="@string/city"
                         android:textColor="#EB87C7"
-                        android:textSize="30sp" />
+                        android:textSize="27sp" />
 
                     <ImageView
                         android:id="@+id/city_change"
@@ -197,6 +197,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/outfit_regular"
                         android:text="REGISTER"
                         android:textColor="#FFFFFF" />
                 </androidx.cardview.widget.CardView>

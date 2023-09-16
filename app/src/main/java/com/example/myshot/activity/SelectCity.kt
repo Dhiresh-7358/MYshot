@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import android.Manifest
+import android.app.Activity
 import android.provider.Settings
 import android.util.Log
 import com.example.myshot.databinding.ActivitySelectCityBinding
@@ -66,6 +67,12 @@ class SelectCity : AppCompatActivity() {
                             Log.d("fire","district: ${address.subAdminArea}")
                             val district = address.subLocality // Use subAdminArea to get the district name
                            binding.cityName.text = "District\n$district"
+                            val resultIntent = Intent()
+                            resultIntent.putExtra("district", district)
+
+                            setResult(Activity.RESULT_OK, resultIntent)
+                            finish()
+
 
                         }
                     }
