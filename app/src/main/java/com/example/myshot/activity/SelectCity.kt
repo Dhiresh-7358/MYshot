@@ -51,8 +51,6 @@ class SelectCity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission", "SetTextI18n")
     private fun getLocation() {
-        val lat = 27.615406
-        val lon = 75.125885
 
         Log.d("fire","district: 1")
         if (checkPermissions()) {
@@ -66,11 +64,10 @@ class SelectCity : AppCompatActivity() {
                         val geocoder = Geocoder(this, Locale.getDefault())
                         val list: List<Address> =
 
-                            geocoder.getFromLocation(lat, lon, 1) as List<Address>
-                        var ll=location.longitude
+                            geocoder.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
                         if (list.isNotEmpty()) {
                             val address = list[0]
-                            Log.d("fire","district: $ll")
+                            Log.d("fire","district: ${address.subAdminArea}")
                             val district = address.subLocality // Use subAdminArea to get the district name
                            binding.cityName.text = "District\n$district"
 
