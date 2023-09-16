@@ -1,5 +1,6 @@
 package com.example.myshot.fragment
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -19,6 +20,10 @@ import com.example.myshot.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
     private lateinit var binging: FragmentHomeBinding
+
+    companion object {
+        const val REQUEST_CODE = 123 // You can choose any unique request code
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,13 +83,14 @@ class HomeFragment : Fragment() {
         //when clicked on city button
         val city: View = binging.city
         city.setOnClickListener {
-            val intent = Intent(activity, SelectCity::class.java)
-
-            startActivity(intent)
+            val intent = Intent(requireContext(), SelectCity::class.java)
+            startActivityForResult(intent, REQUEST_CODE)
         }
 
 
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
