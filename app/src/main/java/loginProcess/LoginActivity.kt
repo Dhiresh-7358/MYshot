@@ -10,10 +10,9 @@ import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.example.myshot.MainActivity
+import com.example.myshot.activity.MainActivity
 import com.example.myshot.R
 import com.example.myshot.databinding.ActivityLoginBinding
-import com.google.android.gms.common.internal.Objects.ToStringHelper
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
@@ -92,10 +91,12 @@ class LoginActivity : AppCompatActivity() {
 
             if (e is FirebaseAuthInvalidCredentialsException) {
                 Log.d("tag","ON verification failed ${e.toString()}")
-                // Invalid request
+
+                Toast.makeText(this@LoginActivity, "ON verification failed $e", Toast.LENGTH_SHORT).show()
+
             } else if (e is FirebaseTooManyRequestsException) {
                 Log.d("tag","ON verification failed ${e.toString()}")
-                // The SMS quota for the project has been exceeded
+                Toast.makeText(this@LoginActivity, "ON verification failed $e", Toast.LENGTH_SHORT).show()
             }
             // Show a message and update the UI
         }
@@ -117,15 +118,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun toMain(){
-        startActivity(Intent(this,MainActivity::class.java ))
+        startActivity(Intent(this, MainActivity::class.java ))
     }
-//    override fun onStart() {
-//        super.onStart()
-//        if(mAuth.currentUser!=null){
-//            startActivity(Intent(this,MainActivity::class.java ))
-//        }
-//
-//    }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         mAuth.signInWithCredential(credential)

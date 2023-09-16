@@ -1,5 +1,6 @@
-package com.example.myshot.NavigationBarFragment
+package com.example.myshot.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshot.dataClass.CategoryData
 import com.example.myshot.R
+import com.example.myshot.activity.SelectCity
 import com.example.myshot.adapter.CategoryAdapter
 import com.example.myshot.adapter.IdeaAdapter
 import com.example.myshot.adapter.TopPhotoAdapter
@@ -71,6 +73,15 @@ class HomeFragment : Fragment() {
             }
         }
         (ideaRecycler.adapter as IdeaAdapter).epList=ideaList
+
+
+        //when clicked on city button
+        val city: View = binging.city
+        city.setOnClickListener {
+            val intent = Intent(activity, SelectCity::class.java)
+
+            startActivity(intent)
+        }
 
 
     }

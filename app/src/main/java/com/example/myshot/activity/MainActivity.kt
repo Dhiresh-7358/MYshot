@@ -1,9 +1,9 @@
-package com.example.myshot
+package com.example.myshot.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.myshot.NavigationBarFragment.HomeFragment
-import javax.net.ssl.HostnameVerifier
+import com.example.myshot.fragment.HomeFragment
+import com.example.myshot.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

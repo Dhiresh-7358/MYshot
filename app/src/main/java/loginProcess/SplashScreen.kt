@@ -3,8 +3,7 @@ package loginProcess
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.myshot.MainActivity
-import com.example.myshot.R
+import com.example.myshot.activity.MainActivity
 
 class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,7 +15,7 @@ class SplashScreen : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         } else {
-            startActivity(Intent(this, GetStartActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 

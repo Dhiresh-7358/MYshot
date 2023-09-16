@@ -32,7 +32,6 @@
         android:id="@+id/send_sms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send via SMS to 9424057849"
         android:fontFamily="@font/outfit_regular"
         app:layout_constraintTop_toBottomOf="@id/verify"
         app:layout_constraintStart_toStartOf="@id/back_arrow"

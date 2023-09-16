@@ -13,14 +13,12 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.example.myshot.MainActivity
+import com.example.myshot.activity.MainActivity
 import com.example.myshot.R
-import com.example.myshot.databinding.ActivityLoginBinding
 import com.example.myshot.databinding.ActivityOtpactivityBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
-import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
 import java.util.concurrent.TimeUnit
 
 class OTPActivity : AppCompatActivity() {
@@ -43,6 +41,7 @@ class OTPActivity : AppCompatActivity() {
         otp = intent.getStringExtra("OTP").toString()
         resendToken = intent.getParcelableExtra("resendToken")!!
         mNumber = intent.getStringExtra("mNUmber").toString()
+        binding.sendSms.text="Send via SMS to $mNumber"
 
         val hint = "   OTP*"
         val spannable = SpannableString(hint)
@@ -60,6 +59,7 @@ class OTPActivity : AppCompatActivity() {
 
         binding.otpContinue.setOnClickListener {
             typeOtp = binding.otp.text.toString()
+
             verifyOtp()
             setTimer(this)
             resent.visibility = View.INVISIBLE
@@ -117,13 +117,6 @@ class OTPActivity : AppCompatActivity() {
 
             otp = verificationId
             resendToken = token
-
-//                val intent=Intent(this@OTPActivity,OTPActivity::class.java)
-//                intent.putExtra("OTP",verificationId)
-//                intent.putExtra("resendToken",token)
-//                intent.putExtra("mNumber",mNumber )
-//                startActivity(intent)
-
         }
     }
 
@@ -142,10 +135,17 @@ class OTPActivity : AppCompatActivity() {
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    SharedPref.putBoolean(SharedConst.IS_USER_LOGGED_IN,true)
-                    Toast.makeText(this, "authSuccess", Toast.LENGTH_SHORT).show()
-                    toMain()
+                    val user = task.result?.additionalUserInfo
+                    if (user != null) {
+                        if (user.isNewUser) {
+                            startActivity(Intent(this, UserInfoActivity::class.java))
+                        } else {
+                            SharedPref.putBoolean(SharedConst.IS_USER_LOGGED_IN, true)
+                            Toast.makeText(this, "authSuccess", Toast.LENGTH_SHORT).show()
+                            toMain()
+                        }
+                    }
+
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.d("tag", "signInWithPhoneAuthCredential ${task.exception.toString()}")

@@ -1,14 +1,12 @@
 package loginProcess
 
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import androidx.core.content.ContextCompat
-import com.example.myshot.MainActivity
 import com.example.myshot.R
 import com.example.myshot.databinding.ActivityGetStartBinding
 
