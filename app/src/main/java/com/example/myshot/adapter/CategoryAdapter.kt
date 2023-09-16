@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myshot.DataClass.CategoryData
+import com.example.myshot.dataClass.CategoryData
 import com.example.myshot.R
 
 class CategoryAdapter(private val listener:(CategoryData)->Unit) : RecyclerView.Adapter<CategoryAdapter.MyViewHolder>() {

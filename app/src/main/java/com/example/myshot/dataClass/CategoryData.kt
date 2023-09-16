@@ -1,4 +1,4 @@
-package com.example.myshot.DataClass
+package com.example.myshot.dataClass
 
 data class CategoryData(
     val CategoryImg: Int,
