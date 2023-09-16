@@ -22,7 +22,6 @@ import java.util.*
 
 class SelectCity : AppCompatActivity() {
 
-    private lateinit var userCity: String
 
     private lateinit var binding: ActivitySelectCityBinding
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
