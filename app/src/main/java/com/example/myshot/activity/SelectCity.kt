@@ -51,16 +51,12 @@ class SelectCity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission", "SetTextI18n")
     private fun getLocation() {
-
-        Log.d("fire","district: 1")
         if (checkPermissions()) {
-            Log.d("fire","district: 2")
             if (isLocationEnabled()) {
-                Log.d("fire","district: 3")
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
                     val location: Location? = task.result
                     if (location != null) {
-                        Log.d("fire","district: 4")
+                        Log.d("fire","district: 1")
                         val geocoder = Geocoder(this, Locale.getDefault())
                         val list: List<Address> =
 
