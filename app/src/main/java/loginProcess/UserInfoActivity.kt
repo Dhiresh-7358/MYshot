@@ -1,11 +1,9 @@
 package loginProcess
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.myshot.R
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myshot.databinding.ActivityUserInfoBinding
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 
 class UserInfoActivity : AppCompatActivity() {
@@ -19,7 +17,7 @@ class UserInfoActivity : AppCompatActivity() {
         setContentView(binding.root)
 
             val db= FirebaseFirestore.getInstance()
-            val storage=FirebaseStorage.getInstance().reference.child("user image")
+        FirebaseStorage.getInstance().reference.child("user image")
 
         val user = hashMapOf(
             "first" to "Alan",
@@ -31,11 +29,11 @@ class UserInfoActivity : AppCompatActivity() {
 // Add a new document with a generated ID
         db.collection("users")
             .add(user)
-            .addOnSuccessListener { documentReference ->
-              //  Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            .addOnSuccessListener {
+                //  Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
             }
-            .addOnFailureListener { e ->
-               // Log.w(TAG, "Error adding document", e)
+            .addOnFailureListener {
+                // Log.w(TAG, "Error adding document", e)
             }
     }
 }

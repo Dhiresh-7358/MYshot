@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshot.dataClass.CategoryData
@@ -87,7 +89,28 @@ class HomeFragment : Fragment() {
             startActivityForResult(intent, REQUEST_CODE)
         }
 
+        val seeAll: View = binging.seeAllTop
+        seeAll.setOnClickListener {
+            navigateToDestinationFragment()
+        }
 
+
+    }
+
+    fun navigateToDestinationFragment() {
+        val photographerFragment = PhotographerFragment()
+        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+
+        val transaction: FragmentTransaction = fragmentManager.beginTransaction()
+
+        // Replace the current fragment with the destination fragment
+        transaction.replace(R.id.container, photographerFragment)
+
+        // Optional: Add the transaction to the back stack (for back navigation)
+        transaction.addToBackStack(null)
+
+        // Commit the transaction
+        transaction.commit()
     }
 
     @Deprecated("Deprecated in Java")

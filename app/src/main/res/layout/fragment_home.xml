@@ -63,11 +63,19 @@
 
                     <ImageView
                         android:id="@+id/imageView"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="right"
-                        android:padding="5dp"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center|right"
+                        android:layout_marginEnd="16dp"
                         android:src="@drawable/notification" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center|right"
+                        android:foreground="@drawable/c0a48af4fd27fbeefc9448a397ef7a10"
+                        app:cardCornerRadius="50dp" />
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -75,7 +83,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_margin="22dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="22dp"
                 android:foreground="@drawable/cardstyle"
                 app:cardCornerRadius="8dp">
 
@@ -103,7 +114,10 @@
                 android:id="@+id/categories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="22dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="22dp"
                 android:fontFamily="@font/outfit_regular"
                 android:text="@string/categories"
                 android:textColor="@color/black"
@@ -119,15 +133,37 @@
                     android:layout_height="match_parent" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/top_photographer"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="22dp"
-                android:fontFamily="@font/outfit_regular"
-                android:text="@string/top_photographers"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
+                app:cardBackgroundColor="#00000000"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
+                app:cardMaxElevation="0dp">
+
+                <TextView
+                    android:id="@+id/top_photographer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="22dp"
+                    android:fontFamily="@font/outfit_regular"
+                    android:text="@string/top_photographers"
+                    android:textColor="@color/black"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/see_all_top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|right"
+                    android:layout_marginEnd="22dp"
+                    android:fontFamily="@font/outfit_regular"
+                    android:text="See All"
+                    android:textColor="@color/pink" />
+            </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -141,15 +177,37 @@
             </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/ideas"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="22dp"
-                android:fontFamily="@font/outfit_regular"
-                android:text="@string/ideas"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
+                app:cardBackgroundColor="#00000000"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
+                app:cardMaxElevation="0dp">
+
+                <TextView
+                    android:id="@+id/ideas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="22dp"
+                    android:fontFamily="@font/outfit_regular"
+                    android:text="@string/ideas"
+                    android:textColor="@color/black"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/see_all_ideas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|right"
+                    android:layout_marginEnd="22dp"
+                    android:fontFamily="@font/outfit_regular"
+                    android:text="See All"
+                    android:textColor="@color/pink" />
+            </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:layout_width="match_parent"

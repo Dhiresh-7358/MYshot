@@ -30,15 +30,50 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-
         mAuth = FirebaseAuth.getInstance()
+        binding.loginContinue.isEnabled = false
+        binding.loginContinue.alpha= 0.5F
 
         setHintColor()
 
         mobileNumber = findViewById(R.id.mobile_number)
 
-        mobileNumber.addTextChangedListener(textWatcher)
+        setTextWatcher()
 
+    }
+
+    private fun setTextWatcher() {
+        mobileNumber.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                mNumber = mobileNumber.text.toString().trim()
+
+
+                if(mNumber.length==10){
+                    binding.loginContinue.alpha= 1F
+                    binding.loginContinue.isEnabled = true
+                }
+//                else{
+//                    Toast.makeText(this@LoginActivity, "Invalid number!!", Toast.LENGTH_SHORT)
+//                        .show()
+//                }
+
+                binding.loginContinue.setOnClickListener {
+
+                        mNumber = "+91$mNumber"
+
+                        sendOTP()
+                }
+
+            }
+
+        })
     }
 
     private fun setHintColor() {
@@ -60,38 +95,38 @@ class LoginActivity : AppCompatActivity() {
         binding.termsCondition.text = SpannedString(spannable2)
     }
 
-    private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            binding.loginContinue.isEnabled=false
-        }
-
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            mNumber = mobileNumber.text.toString().trim()
-
-                binding.loginContinue.isEnabled=mNumber.length==10
-
-//                binding.loginContinue.setOnClickListener {
+//    private val textWatcher = object : TextWatcher {
+//        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//            binding.loginContinue.isEnabled=false
+//        }
 //
-////                    mNumber = mobileNumber.text.toString()
+//        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 //
-//                    if (mNumber.length == 10) {
-//                        mNumber = "+91$mNumber"
+//            mNumber = mobileNumber.text.toString().trim()
 //
-//                        sendOTP()
-//                    } else {
-//                        Log.d("fire", "invalid no. $mNumber number")
-//                    }
+//                binding.loginContinue.isEnabled=mNumber.length==10
 //
-//                }
-
-        }
-
-        override fun afterTextChanged(p0: Editable?) {
-            binding.loginContinue.isEnabled=mNumber.length==10
-        }
-
-    }
+////                binding.loginContinue.setOnClickListener {
+////
+//////                    mNumber = mobileNumber.text.toString()
+////
+////                    if (mNumber.length == 10) {
+////                        mNumber = "+91$mNumber"
+////
+////                        sendOTP()
+////                    } else {
+////                        Log.d("fire", "invalid no. $mNumber number")
+////                    }
+////
+////                }
+//
+//        }
+//
+//        override fun afterTextChanged(p0: Editable?) {
+//            binding.loginContinue.isEnabled=mNumber.length==10
+//        }
+//
+//    }
 
     private fun sendOTP() {
         Log.d("fire", "ON verification start")

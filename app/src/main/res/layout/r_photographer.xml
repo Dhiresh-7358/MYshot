@@ -4,7 +4,7 @@
     android:id="@+id/top_photographer_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="22dp"
+    android:layout_marginTop="30dp"
     android:orientation="vertical">
 
 
@@ -18,21 +18,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/traveler" />
+            android:src="@drawable/anna_unsplash" />
 
         <androidx.cardview.widget.CardView
-            android:layout_width="35dp"
-            android:layout_height="17dp"
+            android:layout_width="49dp"
+            android:layout_height="27dp"
             android:layout_gravity="right"
-            android:layout_margin="8dp"
+            android:layout_margin="15dp"
             app:cardBackgroundColor="#00B300"
             app:cardCornerRadius="5dp">
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:layout_gravity="center|start"
-                android:layout_margin="3dp"
+                android:layout_margin="7dp"
                 app:srcCompat="@drawable/star" />
 
             <TextView
@@ -40,12 +40,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|start"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="24dp"
                 android:fontFamily="@font/outfit_regular"
                 android:gravity="center|left"
                 android:text="5.0"
                 android:textColor="#FEFEFE"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 
@@ -58,16 +58,16 @@
             android:id="@+id/photograph_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
             android:fontFamily="@font/outfit_regular"
             android:text="@string/photographer_name"
             android:textColor="@color/light_black"
-            android:textSize="16sp" />
+            android:textSize="26sp" />
 
         <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_gravity="center|start"
             android:layout_marginTop="3dp"
             app:srcCompat="@drawable/verified" />
@@ -83,12 +83,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="3dp"
+            android:layout_margin="5dp"
             android:fontFamily="@font/outfit_regular"
             android:gravity="center"
             android:text="₹"
             android:textColor="#EB87C7"
-            android:textSize="16sp" />
+            android:textSize="26sp" />
 
         <TextView
             android:id="@+id/photograph_price"
@@ -99,19 +99,19 @@
             android:gravity="center|left"
             android:text="@string/ph_price"
             android:textColor="#EB87C7"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/per_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|left"
-            android:layout_marginStart="3dp"
+            android:layout_marginStart="5dp"
             android:fontFamily="@font/outfit_regular"
             android:gravity="center"
             android:text="Per day"
             android:textColor="#EB87C7"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
 </LinearLayout>
