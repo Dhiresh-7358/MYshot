@@ -5,11 +5,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -30,6 +33,7 @@ class OTPActivity : AppCompatActivity() {
     private lateinit var mNumber: String
     private lateinit var mAuth: FirebaseAuth
     private lateinit var typeOtp: String
+    private lateinit var continueOtp: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +42,35 @@ class OTPActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
 
+
+
         otp = intent.getStringExtra("OTP").toString()
         resendToken = intent.getParcelableExtra("resendToken")!!
         mNumber = intent.getStringExtra("mNUmber").toString()
-        binding.sendSms.text="Send via SMS to $mNumber"
+        binding.sendSms.text = "Send via SMS to $mNumber"
+
+        setHint()
+
+        continueOtp=binding.otpContinue
+        resent = binding.resentOtpButton
+        continueOtp.isEnabled = false
+        continueOtp.alpha = 0.5F
+
+        setTextWatcher()
+
+        resent.visibility = View.INVISIBLE
+
+//        setTimer(this)
+
+        resent.setOnClickListener {
+            resendOtp()
+//            setTimer(this)
+//            resent.visibility = View.INVISIBLE
+        }
+
+    }
+
+    private fun setHint() {
 
         val hint = "   OTP*"
         val spannable = SpannableString(hint)
@@ -50,28 +79,39 @@ class OTPActivity : AppCompatActivity() {
 
         spannable.setSpan(colorSpan, 6, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.otp.hint = spannable
+    }
 
-        resent = binding.resentOtpButton
+    private fun setTextWatcher() {
+        binding.otp.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
 
-        resent.visibility = View.INVISIBLE
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
 
-//        setTimer(this)
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-        binding.otpContinue.setOnClickListener {
-            typeOtp = binding.otp.text.toString()
+                typeOtp = binding.otp.text.toString()
 
-            verifyOtp()
-            setTimer(this)
-            resent.visibility = View.INVISIBLE
+                if (typeOtp.length == 6) {
+                    continueOtp.alpha = 1F
+                    continueOtp.isEnabled = true
 
-        }
+                }
 
-        resent.setOnClickListener {
-            resendOtp()
-//            setTimer(this)
-//            resent.visibility = View.INVISIBLE
-        }
+                continueOtp.setOnClickListener {
+                    if (typeOtp.length != 6) {
+                        Toast.makeText(this@OTPActivity, "Invalid number!!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    verifyOtp()
+                    setTimer(this@OTPActivity)
+                    resent.visibility = View.INVISIBLE
+                }
 
+            }
+
+        })
     }
 
     private fun resendOtp() {
