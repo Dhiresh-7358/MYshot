@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
         binding.loginContinue.isEnabled = false
-        binding.loginContinue.alpha= 0.5F
+        binding.loginContinue.alpha = 0.5F
 
         setHintColor()
 
@@ -55,20 +55,21 @@ class LoginActivity : AppCompatActivity() {
                 mNumber = mobileNumber.text.toString().trim()
 
 
-                if(mNumber.length==10){
-                    binding.loginContinue.alpha= 1F
+                if (mNumber.length == 10) {
+                    binding.loginContinue.alpha = 1F
                     binding.loginContinue.isEnabled = true
                 }
-//                else{
-//                    Toast.makeText(this@LoginActivity, "Invalid number!!", Toast.LENGTH_SHORT)
-//                        .show()
-//                }
 
                 binding.loginContinue.setOnClickListener {
+                    if (mNumber.length != 10) {
+                        Toast.makeText(this@LoginActivity, "Invalid number!!", Toast.LENGTH_SHORT)
+                            .show()
+//
+                    }
 
-                        mNumber = "+91$mNumber"
+                    mNumber = "+91$mNumber"
 
-                        sendOTP()
+                    sendOTP()
                 }
 
             }
@@ -94,39 +95,6 @@ class LoginActivity : AppCompatActivity() {
 
         binding.termsCondition.text = SpannedString(spannable2)
     }
-
-//    private val textWatcher = object : TextWatcher {
-//        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//            binding.loginContinue.isEnabled=false
-//        }
-//
-//        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//
-//            mNumber = mobileNumber.text.toString().trim()
-//
-//                binding.loginContinue.isEnabled=mNumber.length==10
-//
-////                binding.loginContinue.setOnClickListener {
-////
-//////                    mNumber = mobileNumber.text.toString()
-////
-////                    if (mNumber.length == 10) {
-////                        mNumber = "+91$mNumber"
-////
-////                        sendOTP()
-////                    } else {
-////                        Log.d("fire", "invalid no. $mNumber number")
-////                    }
-////
-////                }
-//
-//        }
-//
-//        override fun afterTextChanged(p0: Editable?) {
-//            binding.loginContinue.isEnabled=mNumber.length==10
-//        }
-//
-//    }
 
     private fun sendOTP() {
         Log.d("fire", "ON verification start")
