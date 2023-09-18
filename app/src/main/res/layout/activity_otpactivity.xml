@@ -6,25 +6,26 @@
     android:layout_height="match_parent"
     tools:context="loginProcess.OTPActivity">
 
-    <ImageView
-        android:id="@+id/back_arrow"
-        android:layout_width="18dp"
-        android:layout_height="22dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="80dp"
-        android:src="@drawable/back_arrow"/>
+<!--    <ImageView-->
+<!--        android:id="@+id/back_arrow"-->
+<!--        android:layout_width="18dp"-->
+<!--        android:layout_height="22dp"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginTop="80dp"-->
+<!--        android:src="@drawable/back_arrow"/>-->
 
     <TextView
         android:id="@+id/verify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Verify with OTP"
+        android:layout_marginStart="20dp"
         android:fontFamily="@font/outfit_regular"
-        app:layout_constraintTop_toBottomOf="@id/back_arrow"
-        app:layout_constraintStart_toStartOf="@id/back_arrow"
-        android:layout_marginTop="45dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="120dp"
         android:textSize="24sp"
         android:textColor="@color/black"/>
 
@@ -34,7 +35,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_regular"
         app:layout_constraintTop_toBottomOf="@id/verify"
-        app:layout_constraintStart_toStartOf="@id/back_arrow"
+        app:layout_constraintStart_toStartOf="@id/verify"
         android:layout_marginTop="10dp"
         android:textSize="12sp"
         android:textColor="@color/text_grey"/>
@@ -71,7 +72,7 @@
         android:text="Trying with auto-fill OTP"
         android:fontFamily="@font/outfit_regular"
         app:layout_constraintTop_toBottomOf="@id/otp_input"
-        app:layout_constraintStart_toStartOf="@id/back_arrow"
+        app:layout_constraintStart_toStartOf="@id/otp_input"
         android:layout_marginTop="30dp"
         android:textSize="12sp"
         android:textColor="@color/text_grey"/>
@@ -102,19 +103,64 @@
         android:textSize="12sp"
         android:textColor="@color/pink"/>
 
-    <Button
+    <TextView
+        android:id="@+id/another_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Use another number"
+        android:fontFamily="@font/outfit_regular"
+        app:layout_constraintTop_toBottomOf="@id/resent_otp"
+        app:layout_constraintStart_toStartOf="@id/resent_otp"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:textColor="@color/pink"/>
+
+
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/otp_continue"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@id/another_number"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="50dp"
-        android:background="@drawable/solid_shape_input"
-        android:fontFamily="@font/outfit_regular"
-        android:text="Continue"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/resent_otp"
-        tools:layout_editor_absoluteX="20dp" />
+        android:backgroundTint="@color/pink"
+        app:cardCornerRadius="8dp"
+        android:elevation="8dp"
+        >
+
+        <TextView
+            android:id="@+id/continue_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CONTINUE"
+            android:fontFamily="@font/outfit_regular"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"/>
+
+        <ProgressBar
+            android:id="@+id/otp_progressBar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:indeterminateTint="@color/white"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+<!--    <Button-->
+<!--        android:id="@+id/otp_continue"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginHorizontal="20dp"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:background="@drawable/solid_shape_input"-->
+<!--        android:fontFamily="@font/outfit_regular"-->
+<!--        android:text="Continue"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="16sp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/resent_otp"-->
+<!--        tools:layout_editor_absoluteX="20dp" />-->
 
 
 

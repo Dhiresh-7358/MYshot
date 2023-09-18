@@ -6,8 +6,11 @@ import android.os.Bundle
 import android.text.*
 import android.text.style.ForegroundColorSpan
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.recreate
 import androidx.core.content.ContextCompat
 import com.example.myshot.activity.MainActivity
 import com.example.myshot.R
@@ -29,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        mobileNumber = binding.mobileNumber
 
         mAuth = FirebaseAuth.getInstance()
         binding.loginContinue.isEnabled = false
@@ -36,13 +40,12 @@ class LoginActivity : AppCompatActivity() {
 
         setHintColor()
 
-        mobileNumber = findViewById(R.id.mobile_number)
-
         setTextWatcher()
 
     }
 
     private fun setTextWatcher() {
+        Log.d("fire", "verification  1")
         mobileNumber.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -58,16 +61,27 @@ class LoginActivity : AppCompatActivity() {
                 if (mNumber.length == 10) {
                     binding.loginContinue.alpha = 1F
                     binding.loginContinue.isEnabled = true
+                } else {
+                    binding.loginContinue.alpha = 0.5F
+                    binding.loginContinue.isEnabled = false
+
+                    binding.continueText.visibility = View.VISIBLE
+                    binding.loginProgressBar.visibility = View.INVISIBLE
                 }
 
                 binding.loginContinue.setOnClickListener {
                     if (mNumber.length != 10) {
                         Toast.makeText(this@LoginActivity, "Invalid number!!", Toast.LENGTH_SHORT)
                             .show()
-//
                     }
 
                     mNumber = "+91$mNumber"
+
+                    binding.loginContinue.isEnabled = false
+                    binding.loginContinue.alpha = 0.5F
+
+                    binding.continueText.visibility = View.INVISIBLE
+                    binding.loginProgressBar.visibility = View.VISIBLE
 
                     sendOTP()
                 }
@@ -97,7 +111,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun sendOTP() {
-        Log.d("fire", "ON verification start")
+        Log.d("fire", "verification  send")
+        mAuth.signOut()
+        Log.d("fire", "signOut  ")
 
         val options =
             PhoneAuthOptions.newBuilder(mAuth).setPhoneNumber(mNumber) // Phone number to verify
@@ -112,9 +128,9 @@ class LoginActivity : AppCompatActivity() {
 
     private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
-        override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-            Log.d("fire", "ON verification complete")
 
+        override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+            Log.d("fire", "verification  complete")
             signInWithPhoneAuthCredential(credential)
         }
 
@@ -140,19 +156,29 @@ class LoginActivity : AppCompatActivity() {
             verificationId: String,
             token: PhoneAuthProvider.ForceResendingToken,
         ) {
+            Log.d("fire", "otp: $verificationId")
+            Log.d("fire", "token: $token")
 
             val intent = Intent(this@LoginActivity, OTPActivity::class.java)
             intent.putExtra("OTP", verificationId)
             intent.putExtra("resendToken", token)
             intent.putExtra("mNumber", mNumber)
             Log.d("fire", "send to otp activity")
-            startActivity(intent)
 
+            binding.loginContinue.isEnabled = true
+            binding.loginContinue.alpha = 1F
+
+            binding.loginProgressBar.visibility = View.INVISIBLE
+            binding.continueText.visibility = View.VISIBLE
+
+            startActivity(intent)
+            finish()
 
         }
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+        Log.d("fire", "verification  signWith")
         mAuth.signInWithCredential(credential).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
                 Toast.makeText(this, "authSuccess", Toast.LENGTH_SHORT).show()

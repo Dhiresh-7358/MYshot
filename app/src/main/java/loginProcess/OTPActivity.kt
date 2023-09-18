@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import com.example.myshot.activity.MainActivity
 import com.example.myshot.R
 import com.example.myshot.databinding.ActivityOtpactivityBinding
+import com.google.android.material.card.MaterialCardView
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
@@ -33,7 +34,7 @@ class OTPActivity : AppCompatActivity() {
     private lateinit var mNumber: String
     private lateinit var mAuth: FirebaseAuth
     private lateinit var typeOtp: String
-    private lateinit var continueOtp: Button
+    private lateinit var continueOtp: MaterialCardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,16 +44,17 @@ class OTPActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
 
 
-
         otp = intent.getStringExtra("OTP").toString()
         resendToken = intent.getParcelableExtra("resendToken")!!
-        mNumber = intent.getStringExtra("mNUmber").toString()
-        binding.sendSms.text = "Send via SMS to $mNumber"
+        mNumber = intent.getStringExtra("mNumber").toString()
+        Log.d("fire", "no. $mNumber")
+        binding.sendSms.text = "Send via SMS to  $mNumber"
 
         setHint()
 
-        continueOtp=binding.otpContinue
+        continueOtp = binding.otpContinue
         resent = binding.resentOtpButton
+
         continueOtp.isEnabled = false
         continueOtp.alpha = 0.5F
 
@@ -67,7 +69,16 @@ class OTPActivity : AppCompatActivity() {
 //            setTimer(this)
 //            resent.visibility = View.INVISIBLE
         }
+        binding.anotherNumber.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
 
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, GetStartActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 
     private fun setHint() {
@@ -97,9 +108,19 @@ class OTPActivity : AppCompatActivity() {
                     continueOtp.alpha = 1F
                     continueOtp.isEnabled = true
 
+                } else {
+                    continueOtp.alpha = 0.5F
+                    continueOtp.isEnabled = false
                 }
 
                 continueOtp.setOnClickListener {
+
+                    continueOtp.isEnabled = false
+                    continueOtp.alpha = 0.5F
+
+                    binding.otpProgressBar.visibility = View.VISIBLE
+                    binding.continueText.visibility = View.INVISIBLE
+
                     if (typeOtp.length != 6) {
                         Toast.makeText(this@OTPActivity, "Invalid number!!", Toast.LENGTH_SHORT)
                             .show()
@@ -169,6 +190,7 @@ class OTPActivity : AppCompatActivity() {
 
     private fun toMain() {
         startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
@@ -178,9 +200,18 @@ class OTPActivity : AppCompatActivity() {
                     val user = task.result?.additionalUserInfo
                     if (user != null) {
                         if (user.isNewUser) {
+                            SharedPref.putBoolean(SharedConst.IS_USER_LOGGED_IN, true)
                             startActivity(Intent(this, UserInfoActivity::class.java))
+                            finish()
                         } else {
                             SharedPref.putBoolean(SharedConst.IS_USER_LOGGED_IN, true)
+
+                            continueOtp.isEnabled = true
+                            continueOtp.alpha = 1F
+
+                            binding.otpProgressBar.visibility = View.INVISIBLE
+                            binding.continueText.visibility = View.VISIBLE
+
                             Toast.makeText(this, "authSuccess", Toast.LENGTH_SHORT).show()
                             toMain()
                         }

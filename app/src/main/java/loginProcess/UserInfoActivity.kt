@@ -1,5 +1,6 @@
 package loginProcess
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable
@@ -13,7 +14,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.myshot.R
+import com.example.myshot.activity.MainActivity
 import com.example.myshot.databinding.ActivityUserInfoBinding
+import com.google.android.material.card.MaterialCardView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -23,7 +26,7 @@ class UserInfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserInfoBinding
     private lateinit var name: String
     private lateinit var email: String
-    private lateinit var continueInfo: Button
+    private lateinit var continueInfo: MaterialCardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +48,9 @@ class UserInfoActivity : AppCompatActivity() {
     }
 
 
-
     private fun storeUserData() {
         val db = FirebaseFirestore.getInstance()
-        Log.d("fire","fun called")
+        Log.d("fire", "fun called")
         //   FirebaseStorage.getInstance().reference.child("user image")
 
         val user = hashMapOf(
@@ -57,19 +59,25 @@ class UserInfoActivity : AppCompatActivity() {
         )
         val mAuth = FirebaseAuth.getInstance()
         val userId = mAuth.currentUser?.uid
-        Log.d("fire","id :$userId")
 // Add a new document with a generated ID
         if (userId != null) {
             db.collection("users")
                 .document(userId)
                 .set(user)
                 .addOnSuccessListener {
-                    Log.d("fire","id :$userId")
-                    Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
+
+                    continueInfo.isEnabled = true
+                    continueInfo.alpha = 1F
+
+                    binding.infoProgressBar.visibility = View.INVISIBLE
+                    binding.continueText.visibility = View.VISIBLE
+
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+
                 }
                 .addOnFailureListener {
-                    // Log.w(TAG, "Error adding document", e)
-                    Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "$it", Toast.LENGTH_SHORT).show()
                 }
         }
     }
@@ -90,7 +98,7 @@ class UserInfoActivity : AppCompatActivity() {
         binding.email.hint = spannable2
     }
 
-    private val textWatcher= object : TextWatcher {
+    private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
         }
 
@@ -106,10 +114,23 @@ class UserInfoActivity : AppCompatActivity() {
                 continueInfo.alpha = 1F
                 continueInfo.isEnabled = true
 
+
             }
 
             continueInfo.setOnClickListener {
-                storeUserData()
+
+                if (!email.contains("@") && !email.contains("@")) {
+                    Toast.makeText(this@UserInfoActivity, "Invalid email!!", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    continueInfo.isEnabled = false
+                    continueInfo.alpha = 0.5F
+
+                    binding.infoProgressBar.visibility = View.VISIBLE
+                    binding.continueText.visibility = View.INVISIBLE
+
+                    storeUserData()
+                }
             }
 
         }
