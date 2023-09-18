@@ -87,10 +87,5 @@
             android:textSize="18sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/city_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
 
 </LinearLayout>

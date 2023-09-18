@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshot.dataClass.CategoryData
 import com.example.myshot.R
+import com.example.myshot.activity.Profile
 import com.example.myshot.activity.SelectCity
 import com.example.myshot.adapter.CategoryAdapter
 import com.example.myshot.adapter.IdeaAdapter
@@ -89,6 +90,11 @@ class HomeFragment : Fragment() {
             startActivityForResult(intent, REQUEST_CODE)
         }
 
+        binging.profile.setOnClickListener {
+            val intent = Intent(requireContext(), Profile::class.java)
+            startActivity(intent)
+        }
+
         val seeAll: View = binging.seeAllTop
         seeAll.setOnClickListener {
             navigateToDestinationFragment()
@@ -97,7 +103,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    fun navigateToDestinationFragment() {
+    private fun navigateToDestinationFragment() {
         val photographerFragment = PhotographerFragment()
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
 

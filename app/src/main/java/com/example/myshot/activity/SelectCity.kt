@@ -66,7 +66,7 @@ class SelectCity : AppCompatActivity() {
                             val address = list[0]
                             Log.d("fire","district: ${address.subAdminArea}")
                             val district = address.subLocality // Use subAdminArea to get the district name
-                           binding.cityName.text = "District\n$district"
+
                             val resultIntent = Intent()
                             resultIntent.putExtra("district", district)
 
