@@ -272,13 +272,6 @@
 
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/photographer_image"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                />
-
 
         </LinearLayout>
     </ScrollView>
