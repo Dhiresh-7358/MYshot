@@ -23,7 +23,6 @@ import java.util.*
 
 class SelectCity : AppCompatActivity() {
 
-
     private lateinit var binding: ActivitySelectCityBinding
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private val permissionId = 2
@@ -53,28 +52,26 @@ class SelectCity : AppCompatActivity() {
     @SuppressLint("MissingPermission", "SetTextI18n")
     private fun getLocation() {
         if (checkPermissions()) {
+            Log.d("fire","district: 0")
             if (isLocationEnabled()) {
-                mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
-                    val location: Location? = task.result
+                mFusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                    Log.d("fire","district: 1")
                     if (location != null) {
-                        Log.d("fire","district: 1")
                         val geocoder = Geocoder(this, Locale.getDefault())
-                        val list: List<Address> =
-
-                            geocoder.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
+                        val list: List<Address> = geocoder.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
                         if (list.isNotEmpty()) {
                             val address = list[0]
-                            Log.d("fire","district: ${address.subAdminArea}")
-                            val district = address.subLocality // Use subAdminArea to get the district name
+                            val district = address.subAdminArea // Use subAdminArea to get the district name
 
                             val resultIntent = Intent()
                             resultIntent.putExtra("district", district)
 
                             setResult(Activity.RESULT_OK, resultIntent)
                             finish()
-
-
                         }
+                    } else {
+                        // Handle the case where last known location is null
+                        Toast.makeText(this, "Location will be available soon", Toast.LENGTH_LONG).show()
                     }
                 }
             } else {
@@ -87,8 +84,6 @@ class SelectCity : AppCompatActivity() {
         }
     }
 
-
-
     private fun isLocationEnabled(): Boolean {
         val locationManager: LocationManager =
             getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -98,18 +93,14 @@ class SelectCity : AppCompatActivity() {
     }
 
     private fun checkPermissions(): Boolean {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            return true
-        }
-        return false
+        return ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun requestPermissions() {
@@ -129,10 +120,8 @@ class SelectCity : AppCompatActivity() {
         permissions: Array<String>,
         grantResults: IntArray
     ) {
-        if (requestCode == permissionId) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                getLocation()
-            }
+        if (requestCode == permissionId && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getLocation()
         }
     }
 }
