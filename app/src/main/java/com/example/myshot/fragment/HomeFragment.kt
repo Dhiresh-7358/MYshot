@@ -35,6 +35,7 @@ class HomeFragment : Fragment() {
     private lateinit var categoryList: MutableList<CategoryData>
     private lateinit var topPhotographerList: MutableList<TopPhotoData>
     private lateinit var mList:MutableList <String>
+    private lateinit var mAuth:FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +45,7 @@ class HomeFragment : Fragment() {
     ): View? {
 
         binging = FragmentHomeBinding.inflate(inflater, container, false)
+        mAuth = FirebaseAuth.getInstance() // Initialize mAuth
         return binging.root
     }
 
@@ -56,6 +58,21 @@ class HomeFragment : Fragment() {
 
         val sharedPreferences = requireActivity().getSharedPreferences("myshot_preferences", Context.MODE_PRIVATE)
         val username = sharedPreferences.getString("city", "Delhi")
+
+        val db= FirebaseFirestore.getInstance()
+
+        val documentID= mAuth.currentUser?.uid
+
+        if (documentID != null) {
+            db.collection("users").document(documentID).get()
+                .addOnSuccessListener {
+                    if (it.exists()){
+                        val x = it.getString("name")
+                        val firstAlphabet: Char? = x?.get(0)
+                        binging.userFirstWord.text= firstAlphabet.toString()
+                    }
+                }
+        }
         binging.city.text=username
 
         mList= mutableListOf()
