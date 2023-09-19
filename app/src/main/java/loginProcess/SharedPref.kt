@@ -14,10 +14,21 @@ object SharedPref {
     }
 
     fun putBoolean(key: String, value: Boolean) {
-        preferences.edit().putBoolean(key, value).commit()
+        preferences.edit().putBoolean(key, value).apply()
     }
 
     fun getBoolean(key: String): Boolean {
         return preferences.getBoolean(key, false)
     }
+
+
+
+    fun putData(key: String, value: String){
+        preferences.edit().putString(key,value).apply()
+    }
+
+    fun getData(key: String, value: String): String? {
+        return preferences.getString(key, value)
+    }
+
 }

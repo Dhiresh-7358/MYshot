@@ -30,9 +30,13 @@ class Profile : AppCompatActivity() {
             finish()
         }
 
+        binding.userName.text=SharedPref.getData("username","User")
+        binding.email.text=SharedPref.getData("user_email","user@gmail.com")
+
         fetchData()
 
         binding.profileBack.setOnClickListener{
+
             finish()
         }
     }
@@ -48,8 +52,8 @@ class Profile : AppCompatActivity() {
             db.collection("users").document(documentID).get()
                 .addOnSuccessListener {
                     if (it.exists()){
-                        binding.userName.text=it.getString("name")
-                        binding.email.text=it.getString("email")
+                        //binding.userName.text=it.getString("name")
+                        //binding.email.text=it.getString("email")
                     }
                 }
         }

@@ -28,6 +28,8 @@ import com.example.myshot.databinding.FragmentHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import loginProcess.SharedPref
+
 //import com.squareup.picasso.Picasso
 
 class HomeFragment : Fragment() {
@@ -56,11 +58,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sharedPreferences = requireActivity().getSharedPreferences("myshot_preferences", Context.MODE_PRIVATE)
-        val username = sharedPreferences.getString("city", "Delhi")
+        val user_city=SharedPref.getData("city","Delhi")
 
         val db= FirebaseFirestore.getInstance()
-
         val documentID= mAuth.currentUser?.uid
 
         if (documentID != null) {
@@ -73,7 +73,7 @@ class HomeFragment : Fragment() {
                     }
                 }
         }
-        binging.city.text=username
+        binging.city.text=user_city
 
         mList= mutableListOf()
 
