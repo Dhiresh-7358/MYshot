@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshot.R
 import com.example.myshot.dataClass.TopPhotoData
+import com.squareup.picasso.Picasso
 
 class TopPhotoAdapter(private val listener:(TopPhotoData)->Unit) : RecyclerView.Adapter<TopPhotoAdapter.MyViewHolder>() {
 
@@ -28,6 +29,7 @@ class TopPhotoAdapter(private val listener:(TopPhotoData)->Unit) : RecyclerView.
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         with(holder){
+          //  Picasso.get().load(epList[position].PhotographerImg)
             pimg.setImageResource(epList[position].PhotographerImg)
             pnam.text = epList[position].PhotographerName
             prat.text = epList[position].PhotographerRating

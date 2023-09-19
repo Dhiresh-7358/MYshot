@@ -50,7 +50,6 @@ class UserInfoActivity : AppCompatActivity() {
 
     private fun storeUserData() {
         val db = FirebaseFirestore.getInstance()
-        Log.d("fire", "fun called")
         //   FirebaseStorage.getInstance().reference.child("user image")
 
         val user = hashMapOf(
