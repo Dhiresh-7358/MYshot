@@ -1,6 +1,7 @@
 package com.example.myshot.fragment
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Binder
@@ -27,7 +28,7 @@ import com.example.myshot.databinding.FragmentHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.squareup.picasso.Picasso
+//import com.squareup.picasso.Picasso
 
 class HomeFragment : Fragment() {
     private lateinit var binging: FragmentHomeBinding
@@ -38,6 +39,8 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
+
     ): View? {
 
         binging = FragmentHomeBinding.inflate(inflater, container, false)
@@ -50,6 +53,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val sharedPreferences = requireActivity().getSharedPreferences("myshot_preferences", Context.MODE_PRIVATE)
+        val username = sharedPreferences.getString("city", "Delhi")
+        binging.city.text=username
 
         mList= mutableListOf()
 

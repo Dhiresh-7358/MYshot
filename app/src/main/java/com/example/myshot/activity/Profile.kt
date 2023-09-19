@@ -4,15 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.myshot.R
 import com.example.myshot.databinding.ActivityProfileBinding
-import com.example.myshot.databinding.ActivitySelectCityBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import loginProcess.GetStartActivity
 import loginProcess.SharedConst
 import loginProcess.SharedPref
-import loginProcess.UserInfoActivity
+
 
 class Profile : AppCompatActivity() {
     private lateinit var mAuth:FirebaseAuth
