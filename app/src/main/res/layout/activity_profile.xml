@@ -57,7 +57,6 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/outfit_regular"
-                    android:text="user name"
                     android:textColor="@color/black"
                     android:textSize="22sp" />
 
@@ -78,7 +77,6 @@
                     android:layout_marginEnd="70dp"
                     android:layout_marginBottom="15dp"
                     android:fontFamily="@font/outfit_regular"
-                    android:text="xsquarey@gmail.com"
                     android:textColor="@color/grey"
                     android:textSize="16sp" />
             </androidx.cardview.widget.CardView>

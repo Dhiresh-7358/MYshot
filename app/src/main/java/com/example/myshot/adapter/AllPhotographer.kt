@@ -28,7 +28,8 @@ class AllPhotographer(private val listener:(TopPhotoData)->Unit) : RecyclerView.
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         with(holder){
-            pimg.setImageResource(epList[position].PhotographerImg)
+          //  pimg.setImageResource(epList[position].PhotographerImg)
+
             pnam.text = epList[position].PhotographerName
             prat.text = epList[position].PhotographerRating
             pprice.text = epList[position].PhotographerPrice

@@ -21,12 +21,12 @@ class PhotographerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val photographerList: MutableList<TopPhotoData> = mutableListOf()
-        photographerList.add(TopPhotoData(R.drawable.anna_unsplash,"The Square","5.0","80,000"))
-        photographerList.add(TopPhotoData(R.drawable.alvaro_cvg_mw8izdx7n8e_unsplash,"Mac Studio","4.8","60,000"))
-        photographerList.add(TopPhotoData(R.drawable.anna_unsplash,"Yogi Creations","4.9","1,20,000"))
-        photographerList.add(TopPhotoData(R.drawable.anna_unsplash,"The Square","5.0","80,000"))
-        photographerList.add(TopPhotoData(R.drawable.alvaro_cvg_mw8izdx7n8e_unsplash,"Mac Studio","4.8","60,000"))
-        photographerList.add(TopPhotoData(R.drawable.anna_unsplash,"Yogi Creations","4.9","1,20,000"))
+//        photographerList.add(TopPhotoData(R.drawable.anna_unsplash,"The Square","5.0","80,000"))
+//        photographerList.add(TopPhotoData(R.drawable.alvaro_cvg_mw8izdx7n8e_unsplash,"Mac Studio","4.8","60,000"))
+//        photographerList.add(TopPhotoData(R.drawable.anna_unsplash,"Yogi Creations","4.9","1,20,000"))
+//        photographerList.add(TopPhotoData(R.drawable.anna_unsplash,"The Square","5.0","80,000"))
+//        photographerList.add(TopPhotoData(R.drawable.alvaro_cvg_mw8izdx7n8e_unsplash,"Mac Studio","4.8","60,000"))
+//        photographerList.add(TopPhotoData(R.drawable.anna_unsplash,"Yogi Creations","4.9","1,20,000"))
 
         val photoRecycler: RecyclerView =binging.photographRecycle
 

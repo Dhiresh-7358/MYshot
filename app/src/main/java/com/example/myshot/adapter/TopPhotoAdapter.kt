@@ -1,5 +1,6 @@
 package com.example.myshot.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,11 +30,15 @@ class TopPhotoAdapter(private val listener:(TopPhotoData)->Unit) : RecyclerView.
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         with(holder){
-          //  Picasso.get().load(epList[position].PhotographerImg)
-            pimg.setImageResource(epList[position].PhotographerImg)
-            pnam.text = epList[position].PhotographerName
-            prat.text = epList[position].PhotographerRating
-            pprice.text = epList[position].PhotographerPrice
+            with(epList[position]){
+               // Picasso.get().load(this).into(pimg)
+           // pimg.setImageResource(epList[position].PhotographerImg)
+                Log.d("fire","name2: $PhotographerName")
+            pnam.text = this.PhotographerName
+            prat.text = this.PhotographerRating
+            pprice.text = this.PhotographerPrice
+            }
+//
         }
 
     }

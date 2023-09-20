@@ -3,46 +3,43 @@ package com.example.myshot.fragment
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.os.Binder
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myshot.dataClass.CategoryData
 import com.example.myshot.R
 import com.example.myshot.activity.Profile
 import com.example.myshot.activity.SelectCity
 import com.example.myshot.adapter.CategoryAdapter
 import com.example.myshot.adapter.IdeaAdapter
 import com.example.myshot.adapter.TopPhotoAdapter
+import com.example.myshot.dataClass.CategoryData
 import com.example.myshot.dataClass.TopPhotoData
 import com.example.myshot.databinding.FragmentHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import java.util.*
+
 //import com.squareup.picasso.Picasso
 
 class HomeFragment : Fragment() {
     private lateinit var binging: FragmentHomeBinding
     private lateinit var categoryList: MutableList<CategoryData>
     private lateinit var topPhotographerList: MutableList<TopPhotoData>
-    private lateinit var mList:MutableList <String>
-    private lateinit var mAuth:FirebaseAuth
+    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
 
 
-    ): View? {
+    ): View {
 
         binging = FragmentHomeBinding.inflate(inflater, container, false)
         mAuth = FirebaseAuth.getInstance() // Initialize mAuth
@@ -56,85 +53,34 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sharedPreferences = requireActivity().getSharedPreferences("myshot_preferences", Context.MODE_PRIVATE)
-        val username = sharedPreferences.getString("city", "Delhi")
 
-        val db= FirebaseFirestore.getInstance()
+        setSharedPref()
 
-        val documentID= mAuth.currentUser?.uid
+        setProfileImage()
 
-        if (documentID != null) {
-            db.collection("users").document(documentID).get()
-                .addOnSuccessListener {
-                    if (it.exists()){
-                        val x = it.getString("name")
-                        val firstAlphabet: Char? = x?.get(0)
-                        binging.userFirstWord.text= firstAlphabet.toString()
-                    }
-                }
+        setCategoryList()
+
+        fetchTopPhotographer()
+
+        setIdeaList()
+
+        binging.city.setOnClickListener {
+            val intent = Intent(requireContext(), SelectCity::class.java)
+            startActivityForResult(intent, REQUEST_CODE)
         }
-        binging.city.text=username
 
-        mList= mutableListOf()
-
-        categoryList = mutableListOf()
-        categoryList.add(CategoryData(R.drawable.wedding_rings, "Wedding"))
-        categoryList.add(CategoryData(R.drawable.traveler, "Travel"))
-        categoryList.add(CategoryData(R.drawable.residential, "Commercial"))
-        categoryList.add(CategoryData(R.drawable.food, "Food"))
-        categoryList.add(CategoryData(R.drawable.wedding_rings, "College"))
-
-        val categoryRecycler: RecyclerView = binging.categoryRec
-
-        categoryRecycler.apply {
-            layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
-            adapter = CategoryAdapter() {
-
-            }
+        binging.profile.setOnClickListener {
+            val intent = Intent(requireContext(), Profile::class.java)
+            startActivity(intent)
         }
-        (categoryRecycler.adapter as CategoryAdapter).epList = categoryList
 
-        topPhotographerList = mutableListOf()
-
-      //  fetchTopPhotographer()
-        //     setImage()
-
-        topPhotographerList.add(
-            TopPhotoData(
-                R.drawable.anna_unsplash,
-                "The Square",
-                "5.0",
-                "80,000"
-            )
-        )
-        topPhotographerList.add(
-            TopPhotoData(
-                R.drawable.alvaro_cvg_mw8izdx7n8e_unsplash,
-                "Mac Studio",
-                "4.8",
-                "60,000"
-            )
-        )
-        topPhotographerList.add(
-            TopPhotoData(
-                R.drawable.anna_unsplash,
-                "Yogi Creations",
-                "4.9",
-                "1,20,000"
-            )
-        )
-
-
-        val topPhotoRecycler: RecyclerView = binging.topPhotoRec
-
-        topPhotoRecycler.apply {
-            layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
-            adapter = TopPhotoAdapter() {
-
-            }
+        binging.seeAllTop.setOnClickListener {
+            navigateToDestinationFragment()
         }
-        (topPhotoRecycler.adapter as TopPhotoAdapter).epList = topPhotographerList
 
+    }
+
+    private fun setIdeaList() {
 
         var ideaList: MutableList<CategoryData> = mutableListOf()
         ideaList.add(CategoryData(R.drawable._2dd76f0e1ea89675802c343ff4ee261, "Bridal portrait"))
@@ -156,34 +102,57 @@ class HomeFragment : Fragment() {
             }
         }
         (ideaRecycler.adapter as IdeaAdapter).epList = ideaList
-
-
-        //when clicked on city button
-        val city: View = binging.city
-        city.setOnClickListener {
-            val intent = Intent(requireContext(), SelectCity::class.java)
-            startActivityForResult(intent, REQUEST_CODE)
-        }
-
-        binging.profile.setOnClickListener {
-            val intent = Intent(requireContext(), Profile::class.java)
-            startActivity(intent)
-        }
-
-        val seeAll: View = binging.seeAllTop
-        seeAll.setOnClickListener {
-            navigateToDestinationFragment()
-        }
-
     }
 
-    private fun setImage() {
-        Log.d("fire","fun calllled")
-//        Picasso.get().load(uri).into(binging.photographerImage)
-        Log.d("fire","fun end")
+    private fun setCategoryList() {
+
+        categoryList = mutableListOf()
+        categoryList.add(CategoryData(R.drawable.wedding_rings, "Wedding"))
+        categoryList.add(CategoryData(R.drawable.traveler, "Travel"))
+        categoryList.add(CategoryData(R.drawable.residential, "Commercial"))
+        categoryList.add(CategoryData(R.drawable.food, "Food"))
+        categoryList.add(CategoryData(R.drawable.wedding_rings, "College"))
+
+        val categoryRecycler: RecyclerView = binging.categoryRec
+
+        categoryRecycler.apply {
+            layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
+            adapter = CategoryAdapter() {
+
+            }
+        }
+        (categoryRecycler.adapter as CategoryAdapter).epList = categoryList
+    }
+
+    private fun setSharedPref() {
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("myshot_preferences", Context.MODE_PRIVATE)
+        val userCity = sharedPreferences.getString("city", "Delhi")
+
+        binging.city.text = userCity
+    }
+
+    private fun setProfileImage() {
+
+        val db = FirebaseFirestore.getInstance()
+        val documentID = mAuth.currentUser?.uid
+
+        if (documentID != null) {
+            db.collection("users").document(documentID).get()
+                .addOnSuccessListener {
+                    if (it.exists()) {
+                        val x = it.getString("name")
+                        val firstAlphabet: Char? = x?.get(0)
+                        binging.userFirstWord.text = firstAlphabet.toString()
+                    }
+                }
+        }
     }
 
     private fun fetchTopPhotographer() {
+
+        topPhotographerList = mutableListOf()
+
         val db = FirebaseFirestore.getInstance()
 
         val fieldName = "rating"
@@ -194,26 +163,28 @@ class HomeFragment : Fragment() {
             .get()
             .addOnSuccessListener {
 
-            for (i in it){
-                mList.add(i.data["name"].toString())
-            }
-                Toast.makeText(requireContext(), "fetch data ${mList[0]}", Toast.LENGTH_SHORT).show()
-//
-//             Picasso.get().load(mList[0]).into(binging.photographerImage)
-             //   binging.photographerImage.setImageResource(mList[0])
+                topPhotographerList.clear()
+                for (document in it) {
+                    val data = document.data
+                    topPhotographerList.add(
+                        TopPhotoData(
+                            data["image"].toString(), data["name"].toString(),
+                            data["rating"].toString(), data["price"].toString()
+                        )
+                    )
+                }
 
 
-//                topPhotographerList.clear()
-//                for (document in it) {
-//                    val data = document.data
-//                    topPhotographerList.add(
-//                        TopPhotoData(
-//                            data["image"] as Int, data["name"].toString(),
-//                            data["rating"] as String, data["price"].toString()
-//                        )
-//                    )
-//                }
-//                Toast.makeText(requireContext(), "fetch data succ", Toast.LENGTH_SHORT).show()
+                val topPhotoRecycler: RecyclerView = binging.topPhotoRec
+
+                topPhotoRecycler.apply {
+                    layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
+                    adapter = TopPhotoAdapter() {
+                    }
+                }
+                (topPhotoRecycler.adapter as TopPhotoAdapter).epList = topPhotographerList
+
+                // Toast.makeText(requireContext(), "fetch data successfully", Toast.LENGTH_SHORT).show()
             }
 
     }
@@ -247,8 +218,6 @@ class HomeFragment : Fragment() {
 
 
     }
-
-
 
 
 }
