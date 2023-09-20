@@ -22,9 +22,7 @@ object SharedPref {
     }
 
 
-    fun containsKey(key: String): Boolean {
-        return preferences.contains(key)
-    }
+
 
 
 

@@ -13,4 +13,5 @@
     <string name="ph_price">ph_price</string>
     <string name="photographer_name">Photographer_name</string>
     <string name="photographers">Photographers</string>
+    <string name="save_details">Save Details</string>
 </resources>
