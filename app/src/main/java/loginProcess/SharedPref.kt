@@ -33,7 +33,7 @@ object SharedPref {
     }
 
     fun getData(key: String ): String? {
-        return preferences.getString(key, "Null" )
+        return preferences.getString(key, "null" )
     }
 
 }

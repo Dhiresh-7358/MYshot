@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshot.R
 import com.example.myshot.dataClass.TopPhotoData
@@ -31,12 +32,11 @@ class TopPhotoAdapter(private val listener:(TopPhotoData)->Unit) : RecyclerView.
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         with(holder){
             with(epList[position]){
-               // Picasso.get().load(this).into(pimg)
-           // pimg.setImageResource(epList[position].PhotographerImg)
-                Log.d("fire","name2: $PhotographerName")
-            pnam.text = this.PhotographerName
-            prat.text = this.PhotographerRating
-            pprice.text = this.PhotographerPrice
+                Picasso.get().load(this.PhotographerImg).into(pImg)
+           //pImg.setImageURI(this.PhotographerImg.toUri())
+            pName.text = this.PhotographerName
+            pRating.text = this.PhotographerRating.toString()
+            pPrice.text = this.PhotographerPrice
             }
 //
         }
@@ -45,9 +45,9 @@ class TopPhotoAdapter(private val listener:(TopPhotoData)->Unit) : RecyclerView.
 
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val pimg: ImageView = itemView.findViewById(R.id.photographer_img)
-        val pnam: TextView = itemView.findViewById(R.id.photographer_name)
-        val prat: TextView = itemView.findViewById(R.id.photographer_rating)
-        val pprice: TextView = itemView.findViewById(R.id.photographer_price)
+        val pImg: ImageView = itemView.findViewById(R.id.photographer_img)
+        val pName: TextView = itemView.findViewById(R.id.photographer_name)
+        val pRating: TextView = itemView.findViewById(R.id.photographer_rating)
+        val pPrice: TextView = itemView.findViewById(R.id.photographer_price)
     }
 }

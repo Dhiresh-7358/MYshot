@@ -83,7 +83,6 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="@font/outfit_regular"
-                            android:text="T"
                             android:textColor="@color/white"
                             android:textSize="24sp" />
                     </androidx.cardview.widget.CardView>

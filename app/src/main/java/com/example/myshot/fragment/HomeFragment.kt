@@ -141,7 +141,7 @@ class HomeFragment : Fragment() {
             db.collection("users").document(documentID).get()
                 .addOnSuccessListener {
                     if (it.exists()) {
-                        val x = it.getString("name")
+                        val x = it.getString("name")?.capitalize()
                         val firstAlphabet: Char? = x?.get(0)
                         binging.userFirstWord.text = firstAlphabet.toString()
                     }
@@ -211,8 +211,6 @@ class HomeFragment : Fragment() {
 
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val district = data?.getStringExtra("district")
-            // Now you have the district data from SelectCity Activity
-            // You can use it as needed in your HomeFragment
             binging.city.text = district
         }
 
