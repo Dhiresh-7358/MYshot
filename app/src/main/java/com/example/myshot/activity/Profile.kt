@@ -29,11 +29,16 @@ class Profile : AppCompatActivity() {
             startActivity(Intent(this, GetStartActivity::class.java))
             finish()
         }
+        if(SharedPref.containsKey("username")) {
+            SharedPref.getData("username")
+            SharedPref.getData("user_email")
+        }
+        else{
 
-        binding.userName.text=SharedPref.getData("username","User")
-        binding.email.text=SharedPref.getData("user_email","user@gmail.com")
-
+        }
         fetchData()
+
+
 
         binding.profileBack.setOnClickListener{
 
@@ -52,8 +57,12 @@ class Profile : AppCompatActivity() {
             db.collection("users").document(documentID).get()
                 .addOnSuccessListener {
                     if (it.exists()){
-                        //binding.userName.text=it.getString("name")
-                        //binding.email.text=it.getString("email")
+                        val x=it.getString("name")
+                        val y=it.getString("email")
+                        binding.userName.text=x
+                        binding.email.text=y
+                        x?.let { it1 -> SharedPref.putData("username", it1) }
+                        y?.let { it1 -> SharedPref.putData("user_email", it1) }
                     }
                 }
         }

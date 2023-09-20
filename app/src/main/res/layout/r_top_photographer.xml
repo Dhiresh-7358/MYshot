@@ -47,7 +47,7 @@
                 android:fontFamily="@font/outfit_regular"
                 android:gravity="center|left"
                 android:text="5.0"
-                android:textColor="#FEFEFE"
+                android:textColor="@color/white"
                 android:textSize="10sp" />
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>

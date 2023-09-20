@@ -22,13 +22,18 @@ object SharedPref {
     }
 
 
+    fun containsKey(key: String): Boolean {
+        return preferences.contains(key)
+    }
+
+
 
     fun putData(key: String, value: String){
         preferences.edit().putString(key,value).apply()
     }
 
-    fun getData(key: String, value: String): String? {
-        return preferences.getString(key, value)
+    fun getData(key: String ): String? {
+        return preferences.getString(key, "Null" )
     }
 
 }
