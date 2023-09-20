@@ -19,6 +19,7 @@ import android.util.Log
 import com.example.myshot.databinding.ActivitySelectCityBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import loginProcess.SharedPref
 import java.util.*
 
 class SelectCity : AppCompatActivity() {
@@ -61,12 +62,9 @@ class SelectCity : AppCompatActivity() {
                         val list: List<Address> = geocoder.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
                         if (list.isNotEmpty()) {
                             val address = list[0]
-                            val district = address.getAddressLine(0) // Use subAdminArea to get the district name
+                            val district = address.subAdminArea // Use subAdminArea to get the district name
 
-                            val sharedPreferences = this.getSharedPreferences("my_app_preferences", Context.MODE_PRIVATE)
-                            val editor = sharedPreferences.edit()
-                            editor.putString("city", district)
-                            editor.apply()
+                            SharedPref.putData("city",district)
 
                             val resultIntent = Intent()
                             resultIntent.putExtra("district", district)

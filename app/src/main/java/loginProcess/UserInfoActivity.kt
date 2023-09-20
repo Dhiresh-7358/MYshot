@@ -52,6 +52,9 @@ class UserInfoActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         //   FirebaseStorage.getInstance().reference.child("user image")
 
+        SharedPref.putData("username",name)
+        SharedPref.putData("user_email",email)
+
         val user = hashMapOf(
             "name" to name,
             "email" to email,
@@ -108,6 +111,7 @@ class UserInfoActivity : AppCompatActivity() {
 
             name = binding.name.text.toString()
             email = binding.email.text.toString()
+
 
             if (name.isNotEmpty() && email.isNotEmpty()) {
                 continueInfo.alpha = 1F
