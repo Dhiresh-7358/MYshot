@@ -1,8 +1,8 @@
 package com.example.myshot.dataClass
 
 data class CategoryData(
-    val CategoryImg: Int,
-    val CategoryName: String
+    val categoryImg: Int,
+    val categoryName: String
 )
 
 

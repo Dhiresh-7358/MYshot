@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshot.R
 import com.example.myshot.dataClass.TopPhotoData
+import com.squareup.picasso.Picasso
 
 class AllPhotographer(private val listener:(TopPhotoData)->Unit) : RecyclerView.Adapter<AllPhotographer.MyViewHolder>() {
 
@@ -28,20 +29,22 @@ class AllPhotographer(private val listener:(TopPhotoData)->Unit) : RecyclerView.
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         with(holder){
-          //  pimg.setImageResource(epList[position].PhotographerImg)
+            with(epList[position]) {
 
-            pnam.text = epList[position].PhotographerName
-            prat.text = epList[position].PhotographerRating
-            pprice.text = epList[position].PhotographerPrice
+                Picasso.get().load(this.PhotographerImg).into(pImg)
+                pName.text = this.PhotographerName
+                pRating.text = this.PhotographerRating.toString()
+                pPrice.text = this.PhotographerPrice
+            }
         }
 
     }
 
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val pimg: ImageView = itemView.findViewById(R.id.photograph_img)
-        val pnam: TextView = itemView.findViewById(R.id.photograph_name)
-        val prat: TextView = itemView.findViewById(R.id.photograph_rating)
-        val pprice: TextView = itemView.findViewById(R.id.photograph_price)
+        val pImg: ImageView = itemView.findViewById(R.id.photograph_img)
+        val pName: TextView = itemView.findViewById(R.id.photograph_name)
+        val pRating: TextView = itemView.findViewById(R.id.photograph_rating)
+        val pPrice: TextView = itemView.findViewById(R.id.photograph_price)
     }
 }

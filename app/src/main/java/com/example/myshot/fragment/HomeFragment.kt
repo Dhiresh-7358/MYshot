@@ -60,7 +60,14 @@ class HomeFragment : Fragment() {
 
         setCategoryList()
 
-        fetchTopPhotographer()
+        topPhotographerList = mutableListOf()
+
+        if(topPhotographerList.isEmpty()){
+            fetchTopPhotographer()
+        }
+        else{
+            setTopPhotographerAdapter()
+        }
 
         setIdeaList()
 
@@ -118,6 +125,8 @@ class HomeFragment : Fragment() {
         categoryRecycler.apply {
             layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
             adapter = CategoryAdapter() {
+                val categoryName=it.categoryName
+                //supportFragmentManager.beginTransaction().replace(R.id.container, CategoryFragment()).commit()
 
             }
         }
@@ -151,8 +160,6 @@ class HomeFragment : Fragment() {
 
     private fun fetchTopPhotographer() {
 
-        topPhotographerList = mutableListOf()
-
         val db = FirebaseFirestore.getInstance()
 
         val fieldName = "rating"
@@ -174,19 +181,24 @@ class HomeFragment : Fragment() {
                     )
                 }
 
+              //  (topPhotoRecycler.adapter as? TopPhotoAdapter).notifyDataSetChanged()
+                setTopPhotographerAdapter()
 
-                val topPhotoRecycler: RecyclerView = binging.topPhotoRec
-
-                topPhotoRecycler.apply {
-                    layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
-                    adapter = TopPhotoAdapter() {
-                    }
-                }
-                (topPhotoRecycler.adapter as TopPhotoAdapter).epList = topPhotographerList
-
-                // Toast.makeText(requireContext(), "fetch data successfully", Toast.LENGTH_SHORT).show()
             }
 
+    }
+
+    private fun setTopPhotographerAdapter() {
+        val topPhotoRecycler: RecyclerView = binging.topPhotoRec
+
+        topPhotoRecycler.apply {
+            layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
+            adapter = TopPhotoAdapter() {
+            }
+        }
+        (topPhotoRecycler.adapter as TopPhotoAdapter).epList = topPhotographerList
+
+        // Toast.makeText(requireContext(), "fetch data successfully", Toast.LENGTH_SHORT).show()
     }
 
     private fun navigateToDestinationFragment() {

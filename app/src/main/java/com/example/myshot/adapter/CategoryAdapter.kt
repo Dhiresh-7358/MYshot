@@ -28,15 +28,21 @@ class CategoryAdapter(private val listener:(CategoryData)->Unit) : RecyclerView.
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         with(holder){
-            img.setImageResource(epList[position].CategoryImg)
-            nam.text = epList[position].CategoryName
+            img.setImageResource(epList[position].categoryImg)
+            nam.text = epList[position].categoryName
         }
 
     }
 
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val img: ImageView = itemView.findViewById(R.id.categoryImage)
         val nam: TextView = itemView.findViewById(R.id.categoryName)
+
+        init {
+            itemView.setOnClickListener {
+                listener.invoke(epList[adapterPosition])
+            }
+        }
     }
 }

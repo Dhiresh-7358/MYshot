@@ -12,7 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class EditProfileFragment : Fragment() {
 
-    private lateinit var binding:FragmentEditProfileBinding
+    private lateinit var binding: FragmentEditProfileBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +23,7 @@ class EditProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding= FragmentEditProfileBinding.inflate(inflater,container,false)
+        binding = FragmentEditProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -31,7 +31,6 @@ class EditProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         fetchData()
-
 
     }
 

@@ -28,8 +28,8 @@ class IdeaAdapter(private val listener:(CategoryData)->Unit) : RecyclerView.Adap
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         with(holder){
-            img.setImageResource(epList[position].CategoryImg)
-            nam.text = epList[position].CategoryName
+            img.setImageResource(epList[position].categoryImg)
+            nam.text = epList[position].categoryName
         }
 
     }

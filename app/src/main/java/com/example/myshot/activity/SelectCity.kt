@@ -35,15 +35,11 @@ class SelectCity : AppCompatActivity() {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        binding.button1.setOnClickListener {
+        binding.getLocation.setOnClickListener {
             getLocation()
         }
 
-        binding.button2.setOnClickListener {
-            getLocation()
-        }
-
-        binding.button3.setOnClickListener{
+        binding.backButton.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
