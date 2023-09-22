@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshot.R
@@ -126,8 +127,11 @@ class HomeFragment : Fragment() {
         categoryRecycler.apply {
             layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
             adapter = CategoryAdapter() {
-                val categoryName=it.categoryName
-                //supportFragmentManager.beginTransaction().replace(R.id.container, CategoryFragment()).commit()
+
+                val bundle=Bundle()
+                bundle.putString("key",it.categoryName)
+
+                findNavController().navigate(R.id.action_homeFragment_to_categoryFragment,bundle)
 
             }
         }
