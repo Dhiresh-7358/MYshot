@@ -59,10 +59,10 @@ class SelectCity : AppCompatActivity() {
                     Log.d("fire","district: 1")
                     if (location != null) {
                         val geocoder = Geocoder(this, Locale.getDefault())
-                        val list: List<Address> = geocoder.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
+                        val list  = geocoder.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
                         if (list.isNotEmpty()) {
                             val address = list[0]
-                            val district = address.subAdminArea // Use subAdminArea to get the district name
+                            val district = address.subAdminArea
 
                             SharedPref.putData("city",district)
 
