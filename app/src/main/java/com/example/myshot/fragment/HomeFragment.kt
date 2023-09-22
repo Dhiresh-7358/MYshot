@@ -24,6 +24,7 @@ import com.example.myshot.databinding.FragmentHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import loginProcess.SharedPref
 import java.util.*
 
 //import com.squareup.picasso.Picasso
@@ -134,9 +135,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setSharedPref() {
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("myshot_preferences", Context.MODE_PRIVATE)
-        val userCity = sharedPreferences.getString("city", "Delhi")
+        val userCity = SharedPref.getData("city")
 
         binging.city.text = userCity
     }

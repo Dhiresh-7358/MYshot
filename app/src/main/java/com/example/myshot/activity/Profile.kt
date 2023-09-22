@@ -27,6 +27,13 @@ class Profile : AppCompatActivity() {
 
         setLogout()
 
+        binding.manageProfile.setOnClickListener{
+            val intent = Intent(this, UpdateProfile::class.java)
+            startActivity(intent)
+        }
+
+
+
         binding.profileBack.setOnClickListener {
 
             finish()
