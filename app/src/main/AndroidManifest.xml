@@ -17,6 +17,9 @@
         android:theme="@style/Theme.MyShot"
         tools:targetApi="31">
         <activity
+            android:name=".Updateprofile"
+            android:exported="false" />
+        <activity
             android:name=".activity.UpdateProfile"
             android:exported="false" />
         <activity
