@@ -1,7 +1,6 @@
 package com.example.myshot.fragment
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshot.R
@@ -84,7 +84,9 @@ class HomeFragment : Fragment() {
         }
 
         binging.seeAllTop.setOnClickListener {
-            navigateToDestinationFragment()
+            val bundle=Bundle()
+            bundle.putString("key","Top Photographers")
+            findNavController().navigate(R.id.action_home_to_photographers,bundle)
         }
 
     }
@@ -131,7 +133,7 @@ class HomeFragment : Fragment() {
                 val bundle=Bundle()
                 bundle.putString("key",it.categoryName)
 
-                findNavController().navigate(R.id.action_homeFragment_to_categoryFragment,bundle)
+                findNavController().navigate(R.id.action_home_to_photographers,bundle)
 
             }
         }
@@ -184,7 +186,6 @@ class HomeFragment : Fragment() {
                     )
                 }
 
-              //  (topPhotoRecycler.adapter as? TopPhotoAdapter).notifyDataSetChanged()
                 setTopPhotographerAdapter()
 
             }
@@ -196,7 +197,12 @@ class HomeFragment : Fragment() {
 
         topPhotoRecycler.apply {
             layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
-            adapter = TopPhotoAdapter() {
+            adapter = TopPhotoAdapter {
+
+                val bundle=Bundle()
+                bundle.putString("key",it.PhotographerName)
+                findNavController().navigate(R.id.action_home_to_details,bundle)
+
             }
         }
         (topPhotoRecycler.adapter as TopPhotoAdapter).epList = topPhotographerList
@@ -205,7 +211,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun navigateToDestinationFragment() {
-        val photographerFragment = PhotographerFragment()
+        val photographerFragment = PhotographersFragment()
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
 
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()

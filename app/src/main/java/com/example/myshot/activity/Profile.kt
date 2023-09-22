@@ -32,8 +32,6 @@ class Profile : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-
         binding.profileBack.setOnClickListener {
 
             finish()

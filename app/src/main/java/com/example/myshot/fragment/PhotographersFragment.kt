@@ -1,22 +1,21 @@
 package com.example.myshot.fragment
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshot.R
 import com.example.myshot.adapter.AllPhotographer
-import com.example.myshot.adapter.TopPhotoAdapter
 import com.example.myshot.dataClass.TopPhotoData
 import com.example.myshot.databinding.FragmentPhotographerBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
-class PhotographerFragment : Fragment() {
+@Suppress("DEPRECATION")
+class PhotographersFragment : Fragment() {
 
     private lateinit var binging: FragmentPhotographerBinding
     private lateinit var photographerList: MutableList<TopPhotoData>
@@ -24,7 +23,7 @@ class PhotographerFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binging = FragmentPhotographerBinding.inflate(inflater, container, false)
         return binging.root
     }
@@ -32,16 +31,13 @@ class PhotographerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val id = arguments?.getString("key")
+
         photographerList = mutableListOf()
 
-        fetPhotographers()
-
-//        if (photographerList.isEmpty()) {
-//            fetPhotographers()
-//        }
-//        else{
-//            setAdapter()
-//        }
+        if (id != null) {
+            fetPhotographers(id)
+        }
 
         binging.backButton.setOnClickListener {
             requireFragmentManager().popBackStack()
@@ -49,7 +45,9 @@ class PhotographerFragment : Fragment() {
 
     }
 
-    private fun fetPhotographers() {
+    private fun fetPhotographers(id: String) {
+
+        binging.selectPhotographer.text=id
 
         val db = FirebaseFirestore.getInstance()
 
@@ -68,20 +66,20 @@ class PhotographerFragment : Fragment() {
                 }
                 setAdapter()
             }
-
-
-
     }
 
     private fun setAdapter() {
-        val PhotoRecycler: RecyclerView = binging.photographRecycle
+        val photoRecycler: RecyclerView = binging.photographRecycle
 
-        PhotoRecycler.apply {
+        photoRecycler.apply {
             layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-            adapter = AllPhotographer() {
+            adapter = AllPhotographer {
+                    val bundle=Bundle()
+                bundle.putString("key",it.PhotographerName)
+                findNavController().navigate(R.id.action_photographers_to_details)
             }
         }
-        (PhotoRecycler.adapter as AllPhotographer).epList = photographerList
+        (photoRecycler.adapter as AllPhotographer).epList = photographerList
     }
 
 }

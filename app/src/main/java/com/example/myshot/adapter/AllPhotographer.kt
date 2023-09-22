@@ -41,10 +41,16 @@ class AllPhotographer(private val listener:(TopPhotoData)->Unit) : RecyclerView.
     }
 
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         val pImg: ImageView = itemView.findViewById(R.id.photograph_img)
         val pName: TextView = itemView.findViewById(R.id.photograph_name)
         val pRating: TextView = itemView.findViewById(R.id.photograph_rating)
         val pPrice: TextView = itemView.findViewById(R.id.photograph_price)
+        init {
+            itemView.setOnClickListener {
+                listener.invoke(epList[adapterPosition])
+            }
+        }
     }
 }

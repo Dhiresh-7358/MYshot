@@ -11,12 +11,24 @@
         android:name="com.example.myshot.fragment.HomeFragment"
         android:label="HomeFragment" >
         <action
-            android:id="@+id/action_homeFragment_to_categoryFragment"
-            app:destination="@id/category" />
+            android:id="@+id/action_home_to_details"
+            app:destination="@id/details" />
+        <action
+            android:id="@+id/action_home_to_photographers"
+            app:destination="@id/photographers" />
     </fragment>
     <fragment
-        android:id="@+id/category"
-        android:name="com.example.myshot.fragment.CategoryFragment"
-        android:label="fragment_category"
-        tools:layout="@layout/fragment_category" />
+        android:id="@+id/photographers"
+        tools:layout="@layout/fragment_photographer"
+        android:name="com.example.myshot.fragment.PhotographersFragment"
+        android:label="PhotographerFragment" >
+        <action
+            android:id="@+id/action_photographers_to_details"
+            app:destination="@id/details" />
+    </fragment>
+    <fragment
+        android:id="@+id/details"
+        android:name="com.example.myshot.fragment.PhotographerDetailFragmnet"
+        android:label="fragment_photograph_detail"
+        tools:layout="@layout/fragment_photograph_detail" />
 </navigation>
