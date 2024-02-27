@@ -1,0 +1,13 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- Background color for the button -->
+    <solid android:color="@android:color/transparent" />
+
+    <!-- Outline color and width -->
+    <stroke
+        android:width="2dp"
+        android:color="@color/pink" /> <!-- Set the outline color here -->
+
+    <!-- Optionally, set corner radius for rounded corners -->
+    <corners android:radius="4dp" /> <!-- Adjust the corner radius as needed -->
+</shape>

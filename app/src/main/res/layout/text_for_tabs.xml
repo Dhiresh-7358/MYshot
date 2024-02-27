@@ -1,0 +1,28 @@
+<!-- custom_tab_layout.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tabTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/outfit_regular"
+        android:textColor="@color/pink"
+        android:text="Photos"
+        android:layout_gravity="center_horizontal"/>
+
+    <View
+        android:id="@+id/tabLineView"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/pink"
+        android:visibility="invisible"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp" />
+
+
+</LinearLayout>

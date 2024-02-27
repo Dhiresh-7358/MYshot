@@ -1,0 +1,7 @@
+<!-- tab_indicator_custom.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="line">
+    <stroke
+        android:width="2dp"
+        android:color="@color/pink" />
+</shape>

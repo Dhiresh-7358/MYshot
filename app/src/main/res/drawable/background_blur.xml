@@ -1,0 +1,5 @@
+<!-- background_blur.xml -->
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/_2dd76f0e1ea89675802c343ff4ee261"
+    android:alpha="0.5"
+    android:filter="true" />
