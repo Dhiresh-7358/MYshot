@@ -4,7 +4,8 @@ data class TopPhotoData(
     val PhotographerImg: String,
     val PhotographerName: String,
     val PhotographerRating: String,
-    val PhotographerPrice: String
+    val PhotographerPrice: String,
+    var isLiked: Boolean=false
 )
 
 

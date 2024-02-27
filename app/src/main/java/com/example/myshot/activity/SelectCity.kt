@@ -16,6 +16,7 @@ import android.Manifest
 import android.app.Activity
 import android.provider.Settings
 import android.util.Log
+import androidx.navigation.findNavController
 import com.example.myshot.databinding.ActivitySelectCityBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices

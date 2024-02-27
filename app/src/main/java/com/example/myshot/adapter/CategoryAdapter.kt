@@ -34,7 +34,6 @@ class CategoryAdapter(private val listener:(CategoryData)->Unit) : RecyclerView.
 
     }
 
-
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val img: ImageView = itemView.findViewById(R.id.categoryImage)
         val nam: TextView = itemView.findViewById(R.id.categoryName)

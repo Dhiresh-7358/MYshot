@@ -16,6 +16,18 @@
         <action
             android:id="@+id/action_home_to_photographers"
             app:destination="@id/photographers" />
+        <action
+            android:id="@+id/action_home_to_search"
+            app:destination="@id/search" />
+        <action
+            android:id="@+id/action_home_to_profile"
+            app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_home_to_selectCity"
+            app:destination="@id/selectCity" />
+        <action
+            android:id="@+id/action_home_to_ideasFragment"
+            app:destination="@id/ideasFragment" />
     </fragment>
     <fragment
         android:id="@+id/photographers"
@@ -28,7 +40,111 @@
     </fragment>
     <fragment
         android:id="@+id/details"
-        android:name="com.example.myshot.fragment.PhotographerDetailFragmnet"
+        android:name="com.example.myshot.fragment.PhotographerDetailFragment"
         android:label="fragment_photograph_detail"
         tools:layout="@layout/fragment_photograph_detail" />
+    <fragment
+        android:id="@+id/search"
+        android:name="com.example.myshot.fragment.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_search_to_details"
+            app:destination="@id/details" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.example.myshot.fragment.ProfileFragment"
+        android:label="fragment_profil"
+        tools:layout="@layout/fragment_profil" >
+        <action
+            android:id="@+id/action_profile_to_update"
+            app:destination="@id/update" />
+        <action
+            android:id="@+id/action_profile_to_getStart"
+            app:destination="@id/getStart" />
+        <action
+            android:id="@+id/action_profile_to_wishlistFragment"
+            app:destination="@id/wishlistFragment" />
+        <action
+            android:id="@+id/action_profile_to_ideasFragment"
+            app:destination="@id/ideasFragment" />
+        <action
+            android:id="@+id/action_profile_to_TOUFragment"
+            app:destination="@id/TOUFragment" />
+        <action
+            android:id="@+id/action_profile_to_aboutAsFragment"
+            app:destination="@id/aboutAsFragment" />
+        <action
+            android:id="@+id/action_profile_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+        <action
+            android:id="@+id/action_profile_to_FAQsFragment"
+            app:destination="@id/FAQsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/update"
+        android:name="com.example.myshot.fragment.UpdateFragment"
+        android:label="fragment_update"
+        tools:layout="@layout/fragment_update" />
+    <activity
+        android:id="@+id/getStart"
+        android:name="loginProcess.GetStartActivity"
+        android:label="activity_get_start"
+        tools:layout="@layout/activity_get_start" />
+    <fragment
+        android:id="@+id/selectCity"
+        tools:layout="@layout/fragment_select_city"
+        android:name="com.example.myshot.fragment.SelectCityFragment"
+        android:label="SelectCityFragment" />
+    <fragment
+        android:id="@+id/ideasFragment"
+        tools:layout="@layout/fragment_ideas"
+        android:name="com.example.myshot.fragment.IdeasFragment"
+        android:label="IdeasFragment" >
+        <action
+            android:id="@+id/action_ideasFragment_to_ideasDetailsFragment"
+            app:destination="@id/ideasDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/wishlistFragment"
+        tools:layout="@layout/fragment_wishlist"
+        android:name="com.example.myshot.fragment.WishlistFragment"
+        android:label="WishlistFragment" >
+        <action
+            android:id="@+id/action_wishlistFragment_to_details"
+            app:destination="@id/details" />
+    </fragment>
+    <fragment
+        android:id="@+id/ideasDetailsFragment"
+        android:name="com.example.myshot.fragment.IdeasDetailsFragment"
+        android:label="fragment_ideas_details"
+        tools:layout="@layout/fragment_ideas_details" >
+        <action
+            android:id="@+id/action_ideasDetailsFragment_to_details"
+            app:destination="@id/details" />
+        <action
+            android:id="@+id/action_ideasDetailsFragment_self"
+            app:destination="@id/ideasDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutAsFragment"
+        android:name="com.example.myshot.fragment.AppDetails.AboutAsFragment"
+        android:label="fragment_about_as"
+        tools:layout="@layout/fragment_about_as" />
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.example.myshot.fragment.AppDetails.PrivacyPolicyFragment"
+        android:label="fragment_privacy_policy"
+        tools:layout="@layout/fragment_privacy_policy" />
+    <fragment
+        android:id="@+id/TOUFragment"
+        android:name="com.example.myshot.fragment.AppDetails.TOUFragment"
+        android:label="fragment_t_o_u"
+        tools:layout="@layout/fragment_t_o_u" />
+    <fragment
+        android:id="@+id/FAQsFragment"
+        android:name="com.example.myshot.fragment.AppDetails.FAQsFragment"
+        android:label="fragment_faqs"
+        tools:layout="@layout/fragment_faqs" />
 </navigation>

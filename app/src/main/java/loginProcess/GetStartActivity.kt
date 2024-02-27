@@ -28,8 +28,14 @@ class GetStartActivity : AppCompatActivity() {
         spannable.setSpan(colorSpan, 32, 45, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         binding.title.text = spannable
-        binding.saveButton.setOnClickListener{
-            startActivity(Intent(this,LoginActivity::class.java))
+        binding.saveButton.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+        finishAffinity()
     }
 }

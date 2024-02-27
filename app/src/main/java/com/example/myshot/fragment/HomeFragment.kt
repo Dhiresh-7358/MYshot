@@ -3,9 +3,11 @@ package com.example.myshot.fragment
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -14,37 +16,39 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshot.R
-import com.example.myshot.activity.Profile
-import com.example.myshot.activity.SelectCity
 import com.example.myshot.adapter.CategoryAdapter
 import com.example.myshot.adapter.IdeaAdapter
 import com.example.myshot.adapter.TopPhotoAdapter
 import com.example.myshot.dataClass.CategoryData
 import com.example.myshot.dataClass.TopPhotoData
 import com.example.myshot.databinding.FragmentHomeBinding
+import com.example.myshot.decorationClass.MarginClassHorizontalLinearLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import loginProcess.SharedConst
 import loginProcess.SharedPref
 import java.util.*
 
-//import com.squareup.picasso.Picasso
+//import com.square.picasso.Picasso
+
+var isFetch = false
 
 class HomeFragment : Fragment() {
     private lateinit var binging: FragmentHomeBinding
     private lateinit var categoryList: MutableList<CategoryData>
     private lateinit var topPhotographerList: MutableList<TopPhotoData>
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+    private lateinit var documentID: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
 
-
     ): View {
 
         binging = FragmentHomeBinding.inflate(inflater, container, false)
-        mAuth = FirebaseAuth.getInstance() // Initialize mAuth
         return binging.root
     }
 
@@ -55,6 +59,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        inIt()
+
+        setCity()
 
         setSharedPref()
 
@@ -62,38 +69,63 @@ class HomeFragment : Fragment() {
 
         setCategoryList()
 
-        topPhotographerList = mutableListOf()
-
-        if(topPhotographerList.isEmpty()){
-            fetchTopPhotographer()
-        }
-        else{
-            setTopPhotographerAdapter()
-        }
+        fetchTopPhotographer()
 
         setIdeaList()
 
         binging.city.setOnClickListener {
-            val intent = Intent(requireContext(), SelectCity::class.java)
-            startActivityForResult(intent, REQUEST_CODE)
+            Toast.makeText(
+                requireContext(),
+                "Currently, this functionality isn't accessible",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         binging.profile.setOnClickListener {
-            val intent = Intent(requireContext(), Profile::class.java)
-            startActivity(intent)
+            findNavController().navigate(R.id.action_home_to_profile)
         }
 
         binging.seeAllTop.setOnClickListener {
-            val bundle=Bundle()
-            bundle.putString("key","Top Photographers")
-            findNavController().navigate(R.id.action_home_to_photographers,bundle)
+            val bundle = Bundle()
+            bundle.putString("key", "Top Photographers")
+            findNavController().navigate(R.id.action_home_to_photographers, bundle)
         }
+
+        binging.searchBar.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("key", "All Photographers")
+            findNavController().navigate(R.id.action_home_to_photographers, bundle)
+        }
+
+//        binging.seeAllIdeas.setOnClickListener {
+//            findNavController().navigate(R.id.action_home_to_ideasFragment)
+//        }
+
+    }
+
+    private fun inIt() {
+
+        db = FirebaseFirestore.getInstance()
+        mAuth = FirebaseAuth.getInstance()
+
+        documentID = mAuth.currentUser?.uid.toString()
+
+        categoryList = mutableListOf()
+        topPhotographerList = mutableListOf()
+    }
+
+    private fun setCity() {
+
+       // SharedPref.getData(SharedConst.USER_CITy).toString()
+//        if(city=="null"){
+//            findNavController().navigate(R.id.action_home_to_selectCity)
+//        }
 
     }
 
     private fun setIdeaList() {
 
-        var ideaList: MutableList<CategoryData> = mutableListOf()
+        val ideaList: MutableList<CategoryData> = mutableListOf()
         ideaList.add(CategoryData(R.drawable._2dd76f0e1ea89675802c343ff4ee261, "Bridal portrait"))
         ideaList.add(CategoryData(R.drawable._c42b830b8533e6fff4b5caf9e9894fd, "Wedding style"))
         ideaList.add(
@@ -109,15 +141,20 @@ class HomeFragment : Fragment() {
         ideaRecycler.apply {
             layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
             adapter = IdeaAdapter() {
-
+                val bundle = Bundle()
+                bundle.putString("key", it.categoryName)
+                Log.d("ram", it.categoryName)
+                findNavController().navigate(R.id.action_home_to_ideasFragment, bundle)
             }
         }
         (ideaRecycler.adapter as IdeaAdapter).epList = ideaList
+
+        val margin = MarginClassHorizontalLinearLayout(0, 36, 36, 5)
+        ideaRecycler.addItemDecoration(margin)
     }
 
     private fun setCategoryList() {
 
-        categoryList = mutableListOf()
         categoryList.add(CategoryData(R.drawable.wedding_rings, "Wedding"))
         categoryList.add(CategoryData(R.drawable.traveler, "Travel"))
         categoryList.add(CategoryData(R.drawable.residential, "Commercial"))
@@ -130,14 +167,16 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
             adapter = CategoryAdapter() {
 
-                val bundle=Bundle()
-                bundle.putString("key",it.categoryName)
-
-                findNavController().navigate(R.id.action_home_to_photographers,bundle)
+                val bundle = Bundle()
+                bundle.putString("key", it.categoryName)
+                findNavController().navigate(R.id.action_home_to_photographers, bundle)
 
             }
         }
         (categoryRecycler.adapter as CategoryAdapter).epList = categoryList
+
+        val margin = MarginClassHorizontalLinearLayout(0, 36, 36, 5)
+        categoryRecycler.addItemDecoration(margin)
     }
 
     private fun setSharedPref() {
@@ -148,16 +187,23 @@ class HomeFragment : Fragment() {
 
     private fun setProfileImage() {
 
-        val db = FirebaseFirestore.getInstance()
-        val documentID = mAuth.currentUser?.uid
 
-        if (documentID != null) {
+        val name = SharedPref.getData(SharedConst.USER_NAME).toString()
+
+        if (name != "null") {
+
+            val firstAlphabet: Char = name.get(0)
+            Log.d("fire", firstAlphabet.toString())
+            binging.userFirstWord.text = firstAlphabet.toString()
+                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+        } else {
             db.collection("users").document(documentID).get()
-                .addOnSuccessListener {
+                .addOnSuccessListener { it ->
                     if (it.exists()) {
-                        val x = it.getString("name")?.capitalize()
+                        val x = it.getString("name")
                         val firstAlphabet: Char? = x?.get(0)
                         binging.userFirstWord.text = firstAlphabet.toString()
+                            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
                     }
                 }
         }
@@ -181,11 +227,13 @@ class HomeFragment : Fragment() {
                     topPhotographerList.add(
                         TopPhotoData(
                             data["image"].toString(), data["name"].toString(),
-                            data["rating"].toString(), data["price"].toString()
-                        )
+                            data["rating"].toString(), data["price"].toString(),
+
+                            )
                     )
                 }
-
+                isFetch = true
+                Log.d("fire", isFetch.toString())
                 setTopPhotographerAdapter()
 
             }
@@ -193,21 +241,23 @@ class HomeFragment : Fragment() {
     }
 
     private fun setTopPhotographerAdapter() {
-        val topPhotoRecycler: RecyclerView = binging.topPhotoRec
 
-        topPhotoRecycler.apply {
+        binging.topPhotoRec.setHasFixedSize(true)
+
+        binging.topPhotoRec.apply {
             layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
             adapter = TopPhotoAdapter {
 
-                val bundle=Bundle()
-                bundle.putString("key",it.PhotographerName)
-                findNavController().navigate(R.id.action_home_to_details,bundle)
+                val bundle = Bundle()
+                bundle.putString("key", it.PhotographerName)
+                findNavController().navigate(R.id.action_home_to_details, bundle)
 
             }
         }
-        (topPhotoRecycler.adapter as TopPhotoAdapter).epList = topPhotographerList
+        (binging.topPhotoRec.adapter as TopPhotoAdapter).epList = topPhotographerList
 
-        // Toast.makeText(requireContext(), "fetch data successfully", Toast.LENGTH_SHORT).show()
+        val margin = MarginClassHorizontalLinearLayout(0, 36, 36, 5)
+        binging.topPhotoRec.addItemDecoration(margin)
     }
 
     private fun navigateToDestinationFragment() {

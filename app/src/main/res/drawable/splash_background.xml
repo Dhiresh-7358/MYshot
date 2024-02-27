@@ -6,7 +6,7 @@
             android:width="10dp"
             android:height="10dp"
             android:gravity="center"
-            android:src="@drawable/gps_navigation" />
+            android:src="@drawable/food" />
     </item>
 
 </layer-list>

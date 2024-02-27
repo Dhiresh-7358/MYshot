@@ -5,70 +5,72 @@
     android:id="@+id/photographer_select"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FBFBFB"
     android:orientation="vertical"
-    tools:context=".activity.MainActivity">
+    tools:context=".fragment.PhotographersFragment">
 
-
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:orientation="horizontal">
+        app:cardCornerRadius="0dp">
 
         <ImageView
             android:id="@+id/back_button"
-            android:layout_width="32dp"
-            android:layout_height="28dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="28dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="left"
+            android:layout_marginVertical="20dp"
+            android:layout_marginStart="20dp"
             app:srcCompat="@drawable/back_arrow" />
 
         <TextView
             android:id="@+id/select_photographer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|left"
-            android:layout_marginStart="35dp"
+            android:layout_marginVertical="20dp"
+            android:layout_marginStart="70dp"
             android:fontFamily="@font/outfit_regular"
             android:textColor="@color/black"
-            android:textSize="24sp" />
-    </LinearLayout>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="21dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="5dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|left"
-            android:layout_margin="10dp"
-            android:alpha="0.5"
-            android:src="@drawable/baseline_search_24" />
-
-        <TextView
-            android:id="@+id/photographer_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|left"
-            android:layout_marginLeft="50dp"
-            android:fontFamily="@font/outfit_regular"
-            android:text="Search Photographers..."
-            android:textSize="16sp" />
-
+            android:textSize="20sp" />
     </androidx.cardview.widget.CardView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="30dp"
-        android:id="@+id/photograph_recycle"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:translationY="-5dp" />
+        android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/saveButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="8dp">
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    app:iconifiedByDefault="false"
+                    app:queryBackground="@android:color/transparent"
+                    app:queryHint="Search Photographer.."
+                    app:searchViewStyle="@style/CustomSearchViewStyle" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/photograph_recycle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/r_photographer" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

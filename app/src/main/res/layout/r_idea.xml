@@ -4,15 +4,13 @@
     android:id="@+id/llMain"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="1dp"
+    android:background="@drawable/card_click_effect"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="202dp"
+        android:layout_width="200dp"
         android:layout_height="254dp"
         app:cardCornerRadius="15dp">
-
 
         <ImageView
             android:id="@+id/idea_img"
