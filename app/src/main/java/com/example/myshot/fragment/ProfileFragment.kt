@@ -3,6 +3,7 @@ package com.example.myshot.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -89,21 +90,18 @@ class ProfileFragment : Fragment() {
 
     private fun openEmailApp() {
 
-        val recipient = "dhiresh.yadav.virat@gmail.com"
-        val subject = "Your email subject"
-        val body = "Your email body"
+        val emailSend = "dhiresh.yadav.virat@gmail.com"
+        val emailSubject = "Help"
 
-        val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:$recipient") // Specify "mailto:" as URI
-            putExtra(Intent.EXTRA_SUBJECT, subject) // Add subject
-            putExtra(Intent.EXTRA_TEXT, body) // Add body
-        }
+        val intent = Intent(Intent.ACTION_SEND)
 
-        if (emailIntent.resolveActivity(requireContext().packageManager) == null) {
-            Toast.makeText(requireContext(), "No email app found", Toast.LENGTH_SHORT).show()
-        } else {
-            requireContext().startActivity(emailIntent)
-        }
+        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(emailSend))
+        intent.putExtra(Intent.EXTRA_SUBJECT, emailSubject)
+
+        intent.type = "message/rfc822"
+
+        startActivity(Intent.createChooser(intent, "Choose an Email client:"))
+
     }
 
     private fun setLogout() {

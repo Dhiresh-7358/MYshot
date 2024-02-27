@@ -4,5 +4,6 @@ data class IdeasData(
     val id:Long,
     val name:String,
     val ideasImage:String,
-    val ideaIsLiked:Boolean
+    val ideaIsLiked:Boolean,
+    val categoryIdeaName:String?
 )

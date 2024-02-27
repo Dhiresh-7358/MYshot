@@ -20,25 +20,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/back_button"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="left"
-                android:layout_marginVertical="20dp"
-                android:layout_marginStart="20dp"
-                app:srcCompat="@drawable/back_arrow" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/manage_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="20dp"
-                android:layout_marginStart="70dp"
-                android:text=""
-                android:fontFamily="@font/outfit_regular"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+                <ImageView
+                    android:id="@+id/back_button"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="left"
+                    android:layout_marginVertical="20dp"
+                    android:layout_marginStart="20dp"
+                    android:padding="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/back_arrow" />
+
+                <TextView
+                    android:id="@+id/manage_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/outfit_regular"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@id/back_button"
+                    app:layout_constraintStart_toEndOf="@id/back_button"
+                    app:layout_constraintTop_toTopOf="@id/back_button" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/is_liked_button"
@@ -55,11 +67,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:foregroundTint="@color/pink"
-                    />
+                    android:foregroundTint="@color/pink" />
             </androidx.cardview.widget.CardView>
 
         </androidx.cardview.widget.CardView>
+
         <ScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
@@ -80,8 +92,7 @@
                         android:id="@+id/image"
                         android:layout_width="match_parent"
                         android:layout_height="268dp"
-                        android:scaleType="centerCrop"
-                        />
+                        android:scaleType="centerCrop" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -95,10 +106,11 @@
                         android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="20dp"
                         android:fontFamily="@font/outfit_regular"
                         android:text=""
-                        android:layout_gravity="center"
+                        android:textIsSelectable="true"
                         android:textColor="#2B2929"
                         android:textSize="26sp" />
 
@@ -169,6 +181,7 @@
                         android:fontFamily="@font/outfit_regular"
                         android:text="Shop No. 404,K1 Primo, Kondapur X Junction Kothaguda Mumbai, Maharashtra, India"
                         android:textColor="#4C4A4A"
+                        android:textIsSelectable="true"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -471,9 +484,9 @@
                         android:id="@+id/services_recycler"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        tools:listitem="@layout/r_services"/>
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:listitem="@layout/r_services" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -498,9 +511,9 @@
                         android:id="@+id/location_recycler"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        tools:listitem="@layout/r_services"/>
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:listitem="@layout/r_services" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -522,20 +535,19 @@
                         android:textColor="@color/light_black"
                         android:textSize="18sp" />
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/see_all_reviews"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="right"-->
-<!--                        android:layout_marginEnd="30dp"-->
-<!--                        android:fontFamily="@font/outfit_regular"-->
-<!--                        android:text="See all"-->
-<!--                        android:textColor="@color/pink"-->
-<!--                        android:textSize="20sp" />-->
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/see_all_reviews"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_gravity="right"-->
+                    <!--                        android:layout_marginEnd="30dp"-->
+                    <!--                        android:fontFamily="@font/outfit_regular"-->
+                    <!--                        android:text="See all"-->
+                    <!--                        android:textColor="@color/pink"-->
+                    <!--                        android:textSize="20sp" />-->
 
 
                 </LinearLayout>
-
 
 
                 <LinearLayout
@@ -578,7 +590,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="60dp"
-                    tools:listitem="@layout/r_review"/>
+                    tools:listitem="@layout/r_review" />
 
 
             </LinearLayout>
@@ -589,24 +601,23 @@
         android:id="@+id/contact_now_button"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="6dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="50dp"
+        android:layout_marginBottom="6dp"
         android:backgroundTint="@color/pink"
-        app:cardCornerRadius="8dp"
         android:elevation="8dp"
-        >
+        app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/continue_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contact Now"
+            android:layout_gravity="center"
             android:fontFamily="@font/outfit_regular"
-            android:textSize="16sp"
+            android:text="Contact Now"
             android:textColor="@color/white"
-            android:layout_gravity="center"/>
+            android:textSize="16sp" />
 
     </com.google.android.material.card.MaterialCardView>
 

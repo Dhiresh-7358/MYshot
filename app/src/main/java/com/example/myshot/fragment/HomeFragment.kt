@@ -116,7 +116,7 @@ class HomeFragment : Fragment() {
 
     private fun setCity() {
 
-       // SharedPref.getData(SharedConst.USER_CITy).toString()
+        // SharedPref.getData(SharedConst.USER_CITy).toString()
 //        if(city=="null"){
 //            findNavController().navigate(R.id.action_home_to_selectCity)
 //        }
@@ -149,7 +149,7 @@ class HomeFragment : Fragment() {
         }
         (ideaRecycler.adapter as IdeaAdapter).epList = ideaList
 
-        val margin = MarginClassHorizontalLinearLayout(0, 36, 36, 5)
+        val margin = MarginClassHorizontalLinearLayout(0, 40, 28, 5)
         ideaRecycler.addItemDecoration(margin)
     }
 
@@ -157,9 +157,9 @@ class HomeFragment : Fragment() {
 
         categoryList.add(CategoryData(R.drawable.wedding_rings, "Wedding"))
         categoryList.add(CategoryData(R.drawable.traveler, "Travel"))
-        categoryList.add(CategoryData(R.drawable.residential, "Commercial"))
         categoryList.add(CategoryData(R.drawable.food, "Food"))
         categoryList.add(CategoryData(R.drawable.wedding_rings, "College"))
+        categoryList.add(CategoryData(R.drawable.residential, "Commercial"))
 
         val categoryRecycler: RecyclerView = binging.categoryRec
 
@@ -175,14 +175,14 @@ class HomeFragment : Fragment() {
         }
         (categoryRecycler.adapter as CategoryAdapter).epList = categoryList
 
-        val margin = MarginClassHorizontalLinearLayout(0, 36, 36, 5)
+        val margin = MarginClassHorizontalLinearLayout(0, 40, 28, 5)
         categoryRecycler.addItemDecoration(margin)
     }
 
     private fun setSharedPref() {
-        val userCity = SharedPref.getData("city")
-
-        binging.city.text = userCity
+//        val userCity = SharedPref.getData("city")
+//
+//        binging.city.text = userCity
     }
 
     private fun setProfileImage() {
@@ -233,7 +233,6 @@ class HomeFragment : Fragment() {
                     )
                 }
                 isFetch = true
-                Log.d("fire", isFetch.toString())
                 setTopPhotographerAdapter()
 
             }
@@ -256,7 +255,7 @@ class HomeFragment : Fragment() {
         }
         (binging.topPhotoRec.adapter as TopPhotoAdapter).epList = topPhotographerList
 
-        val margin = MarginClassHorizontalLinearLayout(0, 36, 36, 5)
+        val margin = MarginClassHorizontalLinearLayout(0, 40, 28, 5)
         binging.topPhotoRec.addItemDecoration(margin)
     }
 

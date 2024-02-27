@@ -13,7 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:foregroundGravity="center"
         app:cardBackgroundColor="#87CEEB"
         app:cardCornerRadius="20dp">
 
@@ -32,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/outfit_regular"
-        android:padding="5dp"
+        android:paddingVertical="5dp"
         android:text="category"
         android:textColor="@color/light_black"
         android:textSize="12sp" />

@@ -114,6 +114,9 @@
         <action
             android:id="@+id/action_wishlistFragment_to_details"
             app:destination="@id/details" />
+        <action
+            android:id="@+id/action_wishlistFragment_to_ideasDetailsFragment"
+            app:destination="@id/ideasDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/ideasDetailsFragment"

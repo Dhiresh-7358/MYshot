@@ -1,7 +1,15 @@
 package com.example.myshot.fragment
 
 import android.content.ContentValues
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
+import android.icu.util.RangeValueIterator
 import android.os.Bundle
+import android.renderscript.Allocation
+import android.renderscript.RenderScript
+import android.renderscript.ScriptIntrinsicBlur
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +21,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.myshot.R
 import com.example.myshot.adapter.SimilarIdeasAdapter
 import com.example.myshot.dataClass.IdeasData
@@ -24,6 +33,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import android.renderscript.*
+import android.widget.ImageView
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 
 
 class IdeasDetailsFragment : Fragment() {
@@ -33,6 +47,7 @@ class IdeasDetailsFragment : Fragment() {
     private lateinit var isLikedData: ArrayList<Long>
     private val db = FirebaseFirestore.getInstance()
     private val mAuth = FirebaseAuth.getInstance()
+    private lateinit var name: String
     private val userID = mAuth.currentUser?.uid
     private val documentRef = userID?.let {
         db.collection("users")
@@ -50,23 +65,33 @@ class IdeasDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val name = arguments?.getString("key_name").toString()
+        name = arguments?.getString("key_name").toString()
         binding.typeOfIdeas.text = capitalizeWords(name)
 
         val photographerName = arguments?.getString("key_photographer_name").toString()
         val id = arguments?.getLong("key_id")
 
+        val img = arguments?.getString("key_image")
+        Log.d("ram", img.toString())
+
+
+        Glide.with(requireContext())
+            .load(img)
+            .into(binding.image)
+
         init()
 
         if (id != null) {
-            callFetchIsLikedName(photographerName,id)
+            callFetchIsLikedName(photographerName, id)
         }
-
-        // setPhotographerDetails(id)
+        val blurRadius = 25f
+        if (img != null) {
+            blurImageFromUrl(requireContext(), img, blurRadius, binding.blurImage)
+        }
 
         fetchSimilarIdeas(name)
 
-        binding.ideasDetailsBack.setOnClickListener {
+        binding.backButton.setOnClickListener {
             findNavController().popBackStack()
         }
         binding.photographerDetails.setOnClickListener {
@@ -82,13 +107,13 @@ class IdeasDetailsFragment : Fragment() {
         isLikedData = ArrayList()
     }
 
-    private fun callFetchIsLikedName(name:String,id: Long) {
+    private fun callFetchIsLikedName(name: String, id: Long) {
         CoroutineScope(Dispatchers.Main).launch {
-            fetchIsLikedName(name,id)
+            fetchIsLikedName(name, id)
         }
     }
 
-    private suspend fun fetchIsLikedName(name: String,id:Long) {
+    private suspend fun fetchIsLikedName(name: String, id: Long) {
         try {
             val documentSnapshot = documentRef?.get()?.await()
             if (documentSnapshot != null && documentSnapshot.exists()) {
@@ -123,9 +148,9 @@ class IdeasDetailsFragment : Fragment() {
                                     val image = map["image"].toString()
                                     val id = map["id"] as Long
                                     val liked = false
-                                    ideasList.add(IdeasData(id, name, image, liked))
+                                    ideasList.add(IdeasData(id, name, image, liked, null))
                                 }
-                                setAdapter(id)
+                                setAdapter()
                                 break
                             }
                         }
@@ -169,14 +194,16 @@ class IdeasDetailsFragment : Fragment() {
         return capitalizedWords.joinToString(" ")
     }
 
-    private fun setAdapter(id: String) {
+    private fun setAdapter() {
 
         binding.similarPhotoRecycler.apply {
             layoutManager = GridLayoutManager(activity, 2)
             adapter = SimilarIdeasAdapter(context) {
                 val bundle = Bundle()
-                bundle.putString("key_name", id)
-                bundle.putString("key_id", it.name)
+                bundle.putString("key_name", name)
+                bundle.putString("key_photographer_name", it.name)
+                bundle.putLong("key_id", it.id)
+                bundle.putString("key_image", it.ideasImage)
                 findNavController().navigate(
                     R.id.action_ideasDetailsFragment_self,
                     bundle
@@ -303,6 +330,53 @@ class IdeasDetailsFragment : Fragment() {
             ).show()
         }
 
+    }
+
+    private fun blurImageFromUrl(
+        context: Context,
+        imageUrl: String,
+        radius: Float,
+        imageView: ImageView
+    ) {
+        val requestOptions = RequestOptions()
+            .diskCacheStrategy(DiskCacheStrategy.NONE) // Disable disk cache to ensure the latest image is fetched
+        Glide.with(context)
+            .asBitmap()
+            .load(imageUrl)
+            .apply(requestOptions)
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    val blurredBitmap = resource.applyRenderEffect(context, radius)
+                    imageView.setImageBitmap(blurredBitmap)
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    // Implement if needed
+                }
+            })
+    }
+
+    fun Bitmap.applyRenderEffect(context: Context, radius: Float): Bitmap {
+        val rs = RenderScript.create(context)
+        val inputAllocation = Allocation.createFromBitmap(rs, this)
+
+        // Create an allocation for the output bitmap
+        val outputBitmap = Bitmap.createBitmap(width, height, config)
+        val outputAllocation = Allocation.createFromBitmap(rs, outputBitmap)
+
+        // Create a script for blur effect
+        val script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs))
+        script.setRadius(radius)
+
+        // Perform blur operation
+        script.setInput(inputAllocation)
+        script.forEach(outputAllocation)
+
+        outputAllocation.copyTo(outputBitmap)
+
+        rs.destroy()
+
+        return outputBitmap
     }
 
     companion object {

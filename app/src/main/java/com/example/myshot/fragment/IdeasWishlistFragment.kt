@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myshot.R
 import com.example.myshot.adapter.IdeasWishlistAdapter
@@ -79,7 +80,7 @@ class IdeasWishlistFragment : Fragment() {
                     isLikedData = data
 
                     for (i in isLikedData) {
-                        fetPhotographers(1000)
+                        fetPhotographers(i)
                     }
 
                 }
@@ -93,53 +94,50 @@ class IdeasWishlistFragment : Fragment() {
 
     private fun fetPhotographers(id: Long) {
 
-        Log.d("ram","fetch call")
+        val fieldName = "id"
+        val fieldValueToMatch = id
 
         db.collection("ideas")
-            .whereEqualTo("name", "square")
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    Log.d("ram","document call")
                     val data = document.data
-
-                    Log.d("ram", data.toString())
-
-//                    val services = data["pb array"] as? List<String>
-//                    if (services != null) {
-//                        Log.d("ram","services call")
-//                        for (service in services) {
-//                            println(service)
-//                        }
-//                    }
-                    // Add other data processing logic here if needed
+                    if (data != null) {
+                        for ((key, value) in data) {
+                            if (value is List<*>) {
+                                for (element in value) {
+                                    if (element is Map<*, *>) {
+                                        val id = element[fieldName]
+                                        if (id is Long && id == fieldValueToMatch) {
+                                            Log.d("ram", element["id"].toString())
+                                            val idd = element["id"]
+                                            val name = element["name"]
+                                            val image = element["image"]
+                                            val ideaCategoryName = document.id
+                                            ideasList.add(
+                                                IdeasData(
+                                                    idd as Long,
+                                                    name as String, image as String, true,
+                                                    ideaCategoryName
+                                                )
+                                            )
+                                            if (isLikedData.size == ideasList.size) {
+                                                setIdeasRecycler()
+                                            }
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        Log.d("ram", "Document data is null for document ${document.id}")
+                    }
                 }
-                // Add logic here if you want to perform actions after processing all documents
             }
             .addOnFailureListener { exception ->
-                Log.e(TAG, "Error getting documents: ", exception)
+                Log.e("ram", "Error getting documents", exception)
             }
-
-
-//        db.collection("ideas")
-//            .whereEqualTo("id", id)
-//            .get()
-//            .addOnSuccessListener {
-//                for (i in it) {
-//                    val data = i.data
-//                    ideasList.add(
-//                        IdeasData(
-//                            data["id"] as Long, data["name"].toString(),
-//                            data["image"].toString(),
-//                            true
-//                        )
-//                    )
-//                    if (isLikedData.size == ideasList.size) {
-//                        setIdeasRecycler()
-//                    }
-//                }
-//
-//            }
 
     }
 
@@ -153,8 +151,15 @@ class IdeasWishlistFragment : Fragment() {
 
         binding.ideaWishlistRecycler.apply {
             layoutManager = GridLayoutManager(activity, 2)
-            adapter = IdeasWishlistAdapter() {
-
+            adapter = IdeasWishlistAdapter(requireContext()) {
+                val bundle = Bundle()
+                bundle.putString("key_name", it.categoryIdeaName)
+                bundle.putString("key_photographer_name", it.name)
+                bundle.putLong("key_id", it.id)
+                findNavController().navigate(
+                    R.id.action_wishlistFragment_to_ideasDetailsFragment,
+                    bundle
+                )
             }
         }
         (binding.ideaWishlistRecycler.adapter as IdeasWishlistAdapter).epList = ideasList

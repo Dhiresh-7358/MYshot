@@ -58,7 +58,7 @@ class IdeasFragment : Fragment() {
             }
         })
 
-        binding.ideasBack.setOnClickListener {
+        binding.backButton.setOnClickListener {
             findNavController().popBackStack()
         }
 
@@ -114,7 +114,7 @@ class IdeasFragment : Fragment() {
                                     val image = map["image"].toString()
                                     val id = map["id"] as Long
                                     val liked = likedMatch(id)
-                                    ideasList.add(IdeasData(id, name, image, liked))
+                                    ideasList.add(IdeasData(id, name, image, liked,null))
                                 }
                                 setAdapter(id)
                                 break
@@ -148,6 +148,7 @@ class IdeasFragment : Fragment() {
                 bundle.putString("key_name", name)
                 bundle.putString("key_photographer_name", it.name)
                 bundle.putLong("key_id",it.id)
+                bundle.putString("key_image",it.ideasImage)
                 findNavController().navigate(
                     R.id.action_ideasFragment_to_ideasDetailsFragment,
                     bundle
