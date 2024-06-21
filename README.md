@@ -30,11 +30,12 @@ The home activity includes details such as the photographer's name, address, pac
 As you scroll up, a "Contact Now" button appears. Tapping this button opens WhatsApp, allowing you to initiate a chat with the photographer.<br><br><br>
 
 ### Profile Fragment
-<img src="https://github.com/Dhiresh-7358/MYshot/assets/94732061/ec1b5b6e-9bc2-4ad3-b95d-a3b53b5e3b6c" width="300" height="650"><br><br><br>
+<img src="https://github.com/Dhiresh-7358/MYshot/assets/94732061/ec1b5b6e-9bc2-4ad3-b95d-a3b53b5e3b6c" width="300" height="650"> <img src="https://github.com/Dhiresh-7358/MYshot/assets/94732061/13b4f63e-5066-428f-9541-ce363e1356e1" width="300" height="650"><br><be>
+In the profile fragment, users can view their details such as name and email. They have the option to edit their details by clicking on the pencil icon.<br>
+Users can seek help via email or WhatsApp by selecting the "Help" option. Additionally, they can view their photographer and ideas wishlist.<br><br><br>
 
-
-
-
+### Wishlist Fragment
+<img src="https://github.com/Dhiresh-7358/MYshot/assets/94732061/12a4dc76-092a-4ae4-8626-2540c4ef9d47" width="300" height="650"> <img src="https://github.com/Dhiresh-7358/MYshot/assets/94732061/08107991-8825-41d0-852c-b7460c590e3c" width="300" height="650"><br><br><br>
 
 
 
